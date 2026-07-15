@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2026 JA 中国学生公司全国大赛</title>
+    <style>
+        /* ==========================================================================
+           1. 全局品牌 VI 规范定义与响应式基础
+           ========================================================================== */
+        :root {
+            --primary: #00A0AF;       /* 明亮青碧蓝 */
+            --secondary-dark: #285F74;/* 沉稳深海蓝 */
+            --accent-light: #E3E24F;  /* 活泼极光黄 */
+            --bg-light: #F4F8F9;
+            --text-dark: #2C3E50;
+            --text-muted: #7F8C8D;
+            --radius-md: 12px;
+            --shadow-sm: 0 6px 18px rgba(40, 95, 116, 0.06);
+            --shadow-md: 0 10px 30px rgba(40, 95, 116, 0.12);
+            --max-width: 1200px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        
+        /* 启用全页平滑滚动体验 */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding-bottom: 70px; /* 移动端底部导航留空 */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 核心内容包裹区 */
+        .main-wrapper {
+            flex: 1 0 auto;
+        }
+
+        /* ==========================================================================
+           2. JA中国 LOGO 标准骨架盒与双端导航
+           ========================================================================== */
+        .logo-box {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent !important;   /* 强制背景透明 */
+            border: none !important;              /* 去除外框线 */
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* 手机端独占：顶部常驻 LOGO 栏 */
+        .mobile-top-bar {
+            background: white;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            border-bottom: 1px solid #EAECEE;
+        }
+        .mobile-top-bar .logo-box { width: 110px; height: 35px; }
+        .mobile-top-bar .logo-text { font-size: 0.85rem; font-weight: bold; color: var(--secondary-dark); }
+
+        .pc-header {
+            display: none;
+            background: white;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .pc-nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+        .pc-logo-area { display: flex; align-items: center; gap: 12px; }
+        .pc-logo-area .logo-box { width: 130px; height: 42px; }
+        .pc-logo-text { font-weight: 800; font-size: 1.15rem; color: var(--secondary-dark); }
+        .pc-logo-text span { color: var(--primary); }
+
+        .pc-nav-links { display: flex; gap: 24px; list-style: none; }
+        .pc-nav-links li a { text-decoration: none; color: var(--secondary-dark); font-weight: 600; font-size: 1rem; cursor: pointer; transition: var(--transition); }
+        .pc-nav-links li a.active, .pc-nav-links li a:hover { color: var(--primary); }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            box-shadow: 0 -2px 15px rgba(0,0,0,0.05);
+            z-index: 99;
+        }
+        .bottom-btn {
+            flex: 1;
+            border: none;
+            background: none;
+            padding: 14px 0;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--secondary-dark);
+            cursor: pointer;
+            text-align: center;
+        }
+        .bottom-btn.active { color: var(--primary); font-weight: 700; border-top: 3px solid var(--primary); }
+
+        .floating-container {
+            position: fixed;
+            right: 20px;
+            bottom: 90px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 999;
+        }
+        .float-btn {
+            background-color: var(--secondary-dark);
+            color: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 0.78rem;
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            transition: var(--transition);
+            line-height: 1.2;
+        }
+        .float-btn.live { background-color: #E74C3C; animation: pulse 2s infinite; }
+        .float-btn.photo { background-color: var(--primary); }
+        @keyframes pulse {
+            0 { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); }
+            70% { box-shadow: 0 0 0 12px rgba(231, 76, 60, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+        }
+
+        /* ==========================================================================
+           3. UI 图片/视频占位接口标准规范
+           ========================================================================== */
+        .img-placeholder {
+            background: transparent !important;   /* 移除灰色渐变，变为完全透明 */
+            border: none !important;              /* 确保绝无任何边框线 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: transparent !important;        /* 隐藏提示文字 */
+            font-size: 0.85rem;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+        .img-placeholder img {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--secondary-dark) 0%, #173B48 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom-left-radius: 24px;
+            border-bottom-right-radius: 24px;
+            margin-bottom: 25px;
+        }
+        .hero .hero-logo-container { margin-bottom: 15px; }
+        .hero .hero-logo-container .logo-box { width: 160px; height: 50px; background: transparent !important; border-color: transparent !important; }
+        .hero h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+        .hero p { font-size: 0.95rem; color: rgba(255,255,255,0.8); }
+
+        .section-title {
+            font-size: 1.25rem;
+            color: var(--secondary-dark);
+            margin: 40px 0 15px;
+            font-weight: 700;
+            border-left: 5px solid var(--primary);
+            padding-left: 10px;
+        }
+
+        /* ==========================================================================
+           4. PAGE 1: 首页布局
+           ========================================================================== */
+        .home-grid-layout { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        .video-box { background: white; padding: 16px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
+        .video-placeholder { width: 100%; height: 220px; background-color: #2C3E50; color: white; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: bold; position: relative; overflow: hidden; }
+        .video-placeholder video { width: 100%; height: 100%; object-fit: cover; }
+
+        .card-stream { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        .home-card { background: white; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); padding: 20px; transition: var(--transition); display: flex; flex-direction: column; justify-content: space-between; }
+        .home-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+        .home-card-tag { font-size: 0.8rem; font-weight: bold; color: var(--primary); margin-bottom: 6px; }
+        .home-card-title { font-size: 1.15rem; font-weight: 700; color: var(--secondary-dark); margin-bottom: 8px; }
+        .home-card-body { font-size: 0.9rem; color: var(--text-dark); margin-bottom: 16px; text-align: justify; }
+
+        .cta-btn { display: inline-block; background-color: var(--primary); color: white; padding: 10px 20px; font-size: 0.9rem; font-weight: bold; border-radius: 6px; border: none; cursor: pointer; text-decoration: none; text-align: center; transition: var(--transition); }
+        .cta-btn:hover { background-color: #008996; }
+
+        /* ==========================================================================
+           5. PAGE 3: 璀璨星光 (战队库与嘉宾)
+           ========================================================================== */
+        .sub-tab-bar { display: flex; background: #EAECEE; padding: 4px; border-radius: 8px; margin-bottom: 20px; }
+        .sub-tab-btn { flex: 1; border: none; background: none; padding: 10px 0; font-size: 0.9rem; font-weight: bold; color: var(--secondary-dark); cursor: pointer; border-radius: 6px; }
+        .sub-tab-btn.active { background: white; color: var(--primary); box-shadow: var(--shadow-sm); }
+
+        .star-section { display: none; }
+        .star-section.active { display: block; }
+
+        .search-bar { margin-bottom: 20px; }
+        .search-input { width: 100%; padding: 12px 16px; border: 1px solid rgba(40,95,116,0.15); border-radius: var(--radius-md); outline: none; font-size: 0.95rem; box-shadow: var(--shadow-sm); }
+
+        .team-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        .team-card { background: white; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); overflow: hidden; display: flex; flex-direction: column; transition: var(--transition); }
+        .team-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+        .team-card .img-placeholder { height: 180px; border-radius: 0; border: none !important; border-bottom: none !important; }
+        .card-body { padding: 16px; flex-grow: 1; }
+        .card-school { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; font-weight: 500; }
+        .card-name { font-size: 1.1rem; font-weight: 700; color: var(--secondary-dark); margin-bottom: 6px; }
+        .product-tag { display: inline-block; background-color: rgba(0, 160, 191, 0.06); color: var(--primary); font-size: 0.75rem; font-weight: bold; padding: 3px 8px; border-radius: 4px; margin-bottom: 10px; }
+        .card-desc { font-size: 0.86rem; color: var(--text-dark); text-align: justify; }
+        .card-footer { background-color: #FAFAFA; border-top: 1px dashed rgba(0,0,0,0.05); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        .vote-slogan { font-size: 0.78rem; color: #556677; font-style: italic; }
+        .vote-btn { background-color: var(--accent-light); color: #4A490B; border: none; padding: 8px 14px; font-size: 0.8rem; font-weight: bold; border-radius: 16px; cursor: pointer; box-shadow: 0 2px 6px rgba(227,226,79,0.3); }
+
+        .guest-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        .guest-card { background: white; padding: 16px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); text-align: center; }
+        .guest-card .img-placeholder { width: 70px; height: 70px; border-radius: 50%; margin: 0 auto 10px; }
+        .guest-name { font-size: 0.95rem; font-weight: bold; color: var(--secondary-dark); }
+        .guest-title { font-size: 0.75rem; color: var(--text-muted); }
+
+        /* ==========================================================================
+           6. PAGE 4: 大赛指南 & FAQ
+           ========================================================================== */
+        .date-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .date-btn { flex: 1; border: 1px solid rgba(0,160,191,0.2); background: white; padding: 10px 0; font-size: 0.85rem; font-weight: bold; color: var(--secondary-dark); border-radius: 20px; cursor: pointer; text-align: center; }
+        .date-btn.active { background-color: var(--secondary-dark); color: white; border-color: var(--secondary-dark); }
+        .timeline { position: relative; padding-left: 24px; display: none; }
+        .timeline.active { display: block; }
+        .timeline::before { content: ''; position: absolute; left: 5px; top: 5px; bottom: 5px; width: 2px; background-color: rgba(0,160,191,0.2); }
+        .timeline-item { position: relative; margin-bottom: 18px; }
+        .timeline-item::before { content: ''; position: absolute; left: -24px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background-color: white; border: 3px solid var(--primary); z-index: 2; }
+        .timeline-card { background: white; padding: 14px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); display: flex; justify-content: space-between; align-items: center; }
+        .timeline-card.hot { border-left: 4px solid var(--accent-light); background: linear-gradient(90deg, #FCFCEB 0%, #FFFFFF 100%); }
+        .time-box { font-weight: 700; color: var(--primary); font-size: 0.9rem; margin-right: 12px; }
+        .event-title { font-weight: 600; color: var(--secondary-dark); font-size: 0.95rem; }
+
+        .faq-item { background: white; margin-bottom: 12px; border-radius: 8px; box-shadow: var(--shadow-sm); overflow: hidden; }
+        .faq-header { background: white; padding: 14px 16px; font-weight: 600; font-size: 0.92rem; color: var(--secondary-dark); display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+        .faq-body { display: none; padding: 16px; border-top: 1px solid #F2F4F4; font-size: 0.88rem; color: var(--text-dark); background-color: #FAFBFB; text-align: justify; }
+        .faq-body strong { color: var(--secondary-dark); }
+        .faq-body ul { padding-left: 18px; margin-top: 6px; margin-bottom: 10px; }
+        .faq-body li { margin-bottom: 4px; }
+
+        .spot-card { background: white; padding: 14px 16px; border-radius: 8px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-sm); font-size: 0.9rem; }
+        .copy-btn { background-color: rgba(40, 95, 116, 0.08); color: var(--secondary-dark); border: none; padding: 6px 12px; font-size: 0.8rem; border-radius: 4px; cursor: pointer; font-weight: bold; }
+
+        .data-badge-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0; }
+        .data-badge { background: white; padding: 16px 8px; text-align: center; border-radius: 8px; box-shadow: var(--shadow-sm); border-top: 4px solid var(--primary); }
+        .data-num { font-size: 1.25rem; font-weight: bold; color: var(--secondary-dark); }
+        .data-label { font-size: 0.75rem; color: var(--text-muted); }
+
+        /* ==========================================================================
+           7. PAGE 5: 加入我们布局
+           ========================================================================== */
+        .join-grid-layout { display: grid; grid-template-columns: 1fr; gap: 16px; }
+        .join-card { background: white; padding: 20px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; justify-content: space-between; }
+        .join-card h3 { font-size: 1.1rem; color: var(--secondary-dark); margin-bottom: 8px; }
+        .join-card p { font-size: 0.88rem; color: var(--text-dark); margin-bottom: 14px; text-align: justify; }
+        .join-action { display: flex; justify-content: space-between; align-items: center; }
+        .join-badge { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; }
+        .join-card .cta-btn-link { text-decoration: none; display: inline-block; }
+
+        /* 更改内容区域样式：保持全部块级显示，方便首页一站式向下滚动阅读 */
+        .page-content { 
+            display: block; 
+            margin-bottom: 60px;
+        }
+
+        /* 页面区块之间的分割美化线 */
+        .section-divider {
+            border: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(40, 95, 116, 0.15), transparent);
+            margin: 50px 0;
+        }
+
+        /* ==========================================================================
+           8. 全局常驻合作伙伴通用组件
+           ========================================================================== */
+        .global-sponsor-footer {
+            flex-shrink: 0;
+            background: white;
+            padding: 30px 20px;
+            text-align: center;
+            border-top: 1px solid #EAECEE;
+            box-shadow: 0 -4px 20px rgba(40, 95, 116, 0.03);
+            margin-top: 40px;
+        }
+        .sponsor-title { font-size: 0.85rem; font-weight: bold; color: var(--text-muted); margin-bottom: 18px; letter-spacing: 1px; }
+        .sponsor-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+        .sponsor-grid .logo-box {
+            height: 50px;
+            background: transparent !important;   /* 确保底部合作伙伴盒子也无背景色 */
+        }
+
+        /* 全局强制核心规则 - 图片本身及其所有衍生表现全部透明无边框无投影 */
+        img {
+            background: transparent !important;
+            background-color: transparent !important;
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        /* ==========================================================================
+           9. 响应式媒体查询（电脑端排版重组）
+           ========================================================================== */
+        @media (min-width: 768px) {
+            body { padding-bottom: 0; }
+            .mobile-top-bar { display: none; }
+            .pc-header { display: block; }
+            .bottom-nav { display: none; }
+
+            .hero { padding: 60px 0; margin-bottom: 35px; }
+            .hero h1 { font-size: 2.2rem; }
+
+            .home-grid-layout { grid-template-columns: 1.51fr 1fr; gap: 30px; align-items: start; }
+            .card-stream { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+            .team-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+            @media (min-width: 1024px) { .team-grid { grid-template-columns: repeat(3, 1fr); } }
+
+            .guest-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; }
+            .join-grid-layout { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+            /* 4个LOGO占位图在 PC 端完美横向一字排开 */
+            .sponsor-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 手机端顶部常驻 LOGO 栏 -->
+    <div class="mobile-top-bar">
+        <div class="logo-box">
+            <img src="img/01_mobile_logo.png" alt="JA中国 LOGO">
+        </div>
+        <div class="logo-text">2026 COY 全国学生公司大赛</div>
+    </div>
+
+    <!-- PC 端顶部常驻导航栏 -->
+    <header class="pc-header">
+        <div class="container pc-nav-container">
+            <div class="pc-logo-area">
+                <div class="logo-box">
+                    <img src="img/01_pc_logo.png" alt="JA中国 LOGO">
+                </div>
+                <div class="pc-logo-text">2026 <span>COY 全国大赛</span></div>
+            </div>
+            <ul class="pc-nav-links">
+                <li><a id="pc-nav-home" class="active" onclick="navTo('home')">首页</a></li>
+                <li><a id="pc-nav-about" onclick="navTo('about')">关于 JA</a></li>
+                <li><a id="pc-nav-teams" onclick="navTo('teams')">璀璨星光</a></li>
+                <li><a id="pc-nav-guide" onclick="navTo('guide')">赛事指南</a></li>
+                <li><a id="pc-nav-join" onclick="navTo('join')">加入我们</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- 手机端底部常驻导航栏 -->
+    <nav class="bottom-nav">
+        <button class="bottom-btn active" id="nav-home" onclick="navTo('home')">首页</button>
+        <button class="bottom-btn" id="nav-about" onclick="navTo('about')">关于 JA</button>
+        <button class="bottom-btn" id="nav-teams" onclick="navTo('teams')">璀璨星光</button>
+        <button class="bottom-btn" id="nav-guide" onclick="navTo('guide')">赛事指南</button>
+        <button class="bottom-btn" id="nav-join" onclick="navTo('join')">加入我们</button>
+    </nav>
+
+    <!-- 右侧常驻双流直播悬浮窗 -->
+    <div class="floating-container">
+        <button class="float-btn live" onclick="alert('正在切入 2026 全国大赛主舞台高清视频直播间！')">视频<br>直播</button>
+        <button class="float-btn photo" onclick="alert('正在打开赛事现场高清即时图片直播间！')">照片<br>直播</button>
+    </div>
+
+    <!-- 核心内容切换包装层 -->
+    <div class="main-wrapper">
+        <!-- 主视觉横幅 -->
+        <header class="container">
+            <div class="hero" id="section-home">
+                <div class="hero-logo-container">
+                    <div class="logo-box">
+                        <img src="img/02_hero_logo.png" alt="COY LOGO">
+                    </div>
+                </div>
+                <h1>2026 JA 中国学生公司全国大赛</h1>
+                <p>青年成就中国 · 见证未来商业领袖的实践与成长</p>
+            </div>
+        </header>
+
+        <!-- PAGE 1: 首页主栏目 -->
+        <main id="page-home" class="page-content container">
+            <div class="home-grid-layout">
+                <div>
+                    <h2 class="section-title" style="margin-top:0;">来自志愿者的加油祝福</h2>
+                    <div class="video-box">
+                        <div class="video-placeholder">
+                            <video src="img/03_video_source.mp4" controls poster="img/03_video_poster.jpg" style="display:none;"></video>
+                            <span>🎬 「2026 COY 志愿者加油祝福视频」</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="section-title" style="margin-top:0;">2026 COY 我们来啦！</h2>
+                    <div class="img-placeholder" style="height: 252px;">
+                        <img src="img/02_banner_visual.jpg" alt="赛事主视觉广告图">
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">快速探索 2026 COY</h2>
+            <div class="card-stream">
+                <div class="home-card">
+                    <div>
+                        <div class="home-card-tag">硬核青年 | 3分钟读懂 COY</div>
+                        <div class="home-card-title">走进“JA 学生公司”</div>
+                        <div class="home-card-body">在这里，您将见证中学生如何将自己的创新构想转化为真实的商业运作。只需3分钟，带你领略当代中学生硬核的创业力量，共同见证未来商业领袖的蜕变与成长！</div>
+                    </div>
+                    <button class="cta-btn" onclick="navTo('about')">立即探索</button>
+                </div>
+                <div class="home-card">
+                    <div>
+                        <div class="home-card-tag">高光时刻 | 全阵容集结</div>
+                        <div class="home-card-title">璀璨星光（优秀团队）</div>
+                        <div class="home-card-body">本届全国大赛汇聚了在这一学年里“边学习、边创业”成功晋级的巅峰战队，更有来自各大企业的资深高管与嘉宾倾情加盟，共同助力教育公益！</div>
+                    </div>
+                    <button class="cta-btn" onclick="navTo('teams')">查看阵容</button>
+                </div>
+                <div class="home-card">
+                    <div>
+                        <div class="home-card-tag">参赛必看 | 一站式服务</div>
+                        <div class="home-card-title">赛事指南（日程规则）</div>
+                        <div class="home-card-body">指南在手，拒绝迷路！创意市集、路演答辩、评委面试三大板块的核心规则与北京出行指南已全量整合，助你轻装上阵、高效参赛。</div>
+                    </div>
+                    <button class="cta-btn" onclick="navTo('guide')">点击查阅</button>
+                </div>
+            </div>
+        </main>
+
+        <hr class="section-divider">
+
+        <!-- PAGE 2: 关于JA详细介绍页 -->
+        <section id="page-about" class="page-content container">
+            <h2 class="section-title" id="section-about">关于 JA 中国</h2>
+            <p style="font-size:0.95rem; color:var(--text-dark); margin-bottom:15px; text-align:justify;">
+                JA（Junior Achievement，青年成就）是全球最大的致力于青少年职业发展、财务素养和创业教育的非营利教育组织之一。
+JA 中国成立于 1993 年。三十多年来，我们始终坚持“以学生为中心”的教育理念：
+- <b>跨界链接</b>：深度链接企业与学校。
+- <b>志愿精神</b>：将企业的社会责任与员工的志愿者精神，转化为系统化支持 student 项目化学习的实践课程。
+- <b>育人目标</b>：致力于培养具有社会责任感 and 创新精神的未来商业及社区领袖。
+            </p>
+            <div class="data-badge-container">
+                <div class="data-badge"><div class="data-num">30+年</div><div class="data-label">深耕中国实践教育</div></div>
+                <div class="data-badge"><div class="data-num">74城</div><div class="data-label">覆盖全国核心城市</div></div>
+                <div class="data-badge"><div class="data-num">800万+</div><div class="data-label">累计惠及青少年</div></div>
+            </div>
+
+            <h2 class="section-title">一分钟看懂 “JA 学生公司”</h2>
+            <p style="font-size:0.9rem; color:var(--text-dark); background:white; padding:16px; border-radius:8px; box-shadow:var(--shadow-sm); text-align:justify; margin-bottom:20px;">
+这不仅是一门课程，更是一场真实的商业实战。
+2025-2026学年，《JA 学生公司》项目在北京、上海、成都、西安、长沙等近50所学校蓬勃开展。                
+在长达一学年的时间里，中学生们在学校老师与企业志愿者导师的指导 and 陪伴下，组建 2-6 人的创始团队，成立并运营一家真实的“学生公司”。他们需要直面真实的市场竞争，自负盈亏。<strong>最重要的是，项目一路上所有的核心商业决策，均由学生独立自主完成。</strong>
+            </p>
+
+            <h2 class="section-title">自主跨越的成长足迹</h2>
+            <p style="font-size:0.95rem; font-weight:700; color:var(--primary); margin-bottom:12px; text-align:center;">
+                加入学生公司项目 ➔ 运营实践 ➔ 清算结业 ➔ 地区大赛 ➔ 全国大赛（COY） ➔ 亚太大赛
+            </p>
+            
+            <!-- 📸 新增：20:6 黄金比例成长足迹经历图片容器 -->
+            <div class="img-placeholder" style="width: 100%; aspect-ratio: 20 / 6; border-radius: var(--radius-md); margin-bottom: 20px;">
+                <img src="img/02_growth_path.jpg" alt="JA 学生公司成长经历路线图">
+            </div>
+
+            <div style="background:#285F74; color:white; padding:18px; border-radius:8px; font-size:0.9rem; font-style:italic; line-height:1.7;">
+                “回顾这一年，你们跨越了反复修改方案的深夜，直面了团队的分歧与磨合。今天，你们终于站到了全国大赛（COY）的舞台！无论结果如何，你们都已经在这条硬核的创业实践路上，留下了青春最闪亮的印记！”
+            </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- PAGE 3: 璀璨星光 -->
+        <section id="page-teams" class="page-content container">
+            <h2 class="section-title" id="section-teams">璀璨星光阵容</h2>
+            <nav class="sub-tab-bar">
+                <button class="sub-tab-btn active" id="sub-btn-teams" onclick="switchStarSub('teams')">🏆 20强参赛团队</button>
+                <button class="sub-tab-btn" id="sub-btn-guests" onclick="switchStarSub('guests')">🤝 嘉宾/评委阵容</button>
+            </nav>
+
+            <div id="star-teams-sec" class="star-section active">
+                <div class="search-bar">
+                    <input type="text" id="searchInput" class="search-input" placeholder="输入学校、学生公司名称搜索入围战队..." oninput="filterTeams()">
+                </div>
+                <div class="team-grid" id="teamGrid"></div>
+            </div>
+
+            <div id="star-guests-sec" class="star-section">
+                <h3 class="section-title" style="font-size:1.1rem; border-color:var(--accent-light);">⚖️ 【评委阵容】（资料准备中）</h3>
+                <div class="guest-grid">
+                    <div class="guest-card"><div class="img-placeholder"><img src="img/03_guest_avatar.png" alt="评委头像"></div><div class="guest-name">嘉宾预留席</div><div class="guest-title">企业高管 / 资深评委</div></div>
+                    <div class="guest-card"><div class="img-placeholder"><img src="img/03_guest_avatar.png" alt="评委头像"></div><div class="guest-name">嘉宾预留席</div><div class="guest-title">风险投资人 / 行业专家</div></div>
+                </div>
+
+                <h3 class="section-title" style="font-size:1.1rem; border-color:var(--accent-light);">🎤 【论坛嘉宾】（资料准备中）</h3>
+                <div class="guest-grid">
+                    <div class="guest-card"><div class="img-placeholder"><img src="img/03_guest_avatar.png" alt="嘉宾头像"></div><div class="guest-name">嘉宾预留席</div><div class="guest-title">青年创业领袖</div></div>
+                    <div class="guest-card"><div class="img-placeholder"><img src="img/03_guest_avatar.png" alt="嘉宾头像"></div><div class="guest-name">嘉宾预留席</div><div class="guest-title">学术界重磅导师</div></div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- PAGE 4: 大赛指南 -->
+        <section id="page-guide" class="page-content container">
+            <h2 class="section-title" id="section-guide">大赛指南 & 规范</h2>
+            <div class="date-tabs">
+                <button class="date-btn active" id="btn-d1" onclick="switchDate('7月23日')">7月23日<br>大赛启航</button>
+                <button class="date-btn" id="btn-d2" onclick="switchDate('7月24日')">7月24日<br>创意市集</button>
+                <button class="date-btn" id="btn-d3" onclick="switchDate('7月25日')">7月25日<br>巅峰决战</button>
+            </div>
+
+            <div id="time-7月23日" class="timeline active">
+                <div class="timeline-item"><div class="timeline-card"><div class="time-box">09:00-09:50</div><div class="event-title">🌅 大赛开幕式（请全员着正装出席）</div></div></div>
+                <div class="timeline-item"><div class="timeline-card"><div class="time-box">10:00-12:00</div><div class="event-title">🗣️ 评委闭门面试（上半场）</div></div></div>
+                <div class="timeline-item"><div class="timeline-card"><div class="time-box">13:00-15:30</div><div class="event-title">🗣️ 评委闭门面试（下半场）</div></div></div>
+                <div class="timeline-item"><div class="timeline-card"><div class="time-box">16:00-18:00</div><div class="event-title">🧠 Titan 商业模拟挑战大赛</div></div></div>
+            </div>
+            <div id="time-7月24日" class="timeline">
+                <div class="timeline-item"><div class="timeline-card hot"><div class="time-box">09:00-12:00</div><div class="event-title">🎪 学生创意市集 · 挂牌营业及公开展示交流（高能推荐）</div></div></div>
+                <div class="timeline-item"><div class="timeline-card"><div class="time-box">14:00-17:00</div><div class="event-title">💬 青年双创主题论坛（行业大咖对谈）</div></div></div>
+            </div>
+            <div id="time-7月25日" class="timeline">
+                <div class="timeline-item"><div class="timeline-card hot"><div class="time-box">09:00-12:00</div><div class="event-title">🔥 最终20强公开商业路演（主舞台终极角逐）</div></div></div>
+                <div class="timeline-item"><div class="timeline-card hot"><div class="time-box">18:30-21:30</div><div class="event-title">🏆 荣誉颁奖晚宴（红毯入场及三大年度奖项揭晓）</div></div></div>
+            </div>
+
+            <h2 class="section-title">参赛手册与核心规范 FAQ</h2>
+            <div class="faq-item">
+                <div class="faq-header" onclick="toggleFaq(this)">🎪 市集展销（占比 25%）核心规范 <span>▼</span></div>
+                <div class="faq-body">
+                    <strong>【参赛细则与准则】</strong>
+                    <ul>
+                        <li><strong>展位空间控制</strong>：所有团队的展品、互动道具及人员站位，必须严格控制在所分配的 1.5m × 1.5m 标准展位内。超越展位边界将触发相应的扣分机制。</li>
+                        <li><strong>绿色办展与环保规范</strong>：倡导绿色生态。市集结束后，各团队需自行清理并带走所有非现场物料。若展位留有污渍或废弃物，将直接影响“社会责任”维度的评分。</li>
+                        <li><strong>用电与用电安全</strong>：各展位严禁使用大功率发热电器。所有互动电子设备的布线需使用绝缘胶带完全固定，确保通道顺畅与安全。</li>
+                    </ul>
+                    <div class="img-placeholder" style="height:110px; margin-top:10px;">
+                        <img src="img/04_booth_size_guide.png" alt="摊位尺寸规范图">
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-header" onclick="toggleFaq(this)">📢 舞台公开路演（占比 25%）核心规范 <span>▼</span></div>
+                <div class="faq-body">
+                    <strong>【演讲细则与准则】</strong>
+                    <ul>
+                        <li><strong>严格时间把控</strong>：路演展示限时 4 分钟，互动问答限时 3 分钟。超时将执行现场掐麦（强行中断发言），并按秒扣减相应的路演分数。</li>
+                        <li><strong>演示文件兼容与提交</strong>：路演所用幻灯片演示文稿（PPT / Keynote）必须在 7月22日 18:00 前完成最终版本提交。现场为保证流畅，不接受任何形式的临时文件替换。</li>
+                        <li><strong>团队协同展现</strong>：为体现团队合作，要求团队所有注册成员轮流上台进行宣讲，避免单一核心成员全场垄断发言。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-header" onclick="toggleFaq(this)">👔 评委闭门面试（占比 50%）核心规范 <span>▼</span></div>
+                <div class="faq-body">
+                    <strong>【答辩细则与准则】</strong>
+                    <ul>
+                        <li><strong>严苛的准时考勤</strong>：各战队须提前 15 分钟在候场区完成签到。迟到超过 5 分钟将被取消本模块答辩成绩（本模块占总分比重的 50%）。</li>
+                        <li><strong>全员出席硬性规则</strong>：答辩原则上要求全体团队成员共同进入面试间，接受评委的综合质询。</li>
+                        <li><strong>数据一致性核验</strong>：面试中阐述的财务与运营数据，必须与前期提交的纸质《年度清算报告书》完全一致。若出现数据逻辑冲突，将对团队诚信度与风控维度造成重大负面影响。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2 class="section-title">📍 北京赛场位置指南</h2>
+            <div class="spot-card">
+                <div>
+                    <strong style="color:var(--secondary-dark);">北京王府井希尔顿酒店 · 2层大宴会厅</strong>
+                    <p style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">北京市东城区王府井东街8号</p>
+                </div>
+                <button class="copy-btn" onclick="copyText('北京王府井希尔顿酒店')">复制地址</button>
+            </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- PAGE 5: 加入我们 -->
+        <section id="page-join" class="page-content container">
+            <h2 class="section-title" id="section-join">家校社企协同 共同托举未来</h2>
+            <div class="join-grid-layout">
+                <div class="join-card">
+                    <h3>🎓 JA 校友会回归</h3>
+                    <p>曾参与过 JA 课程的校友们看过来！加入 JA 庞大的校友网络，链接全球创新资源，尊享名企实习推荐及跨界交流沙龙。</p>
+                    <div class="join-action"><span class="join-badge">青春未完待续</span><a href="#" target="_blank" class="cta-btn-link"><button class="cta-btn">校友登记</button></a></div>
+                </div>
+                <div class="join-card">
+                    <h3>🤝 志愿者招募计划</h3>
+                    <p>申请成为学生公司项目的企业导师、赛事评委或现场统筹志愿者，分享商业洞察，并获得 JA 官方认证的国际志愿服务证书。</p>
+                    <div class="join-action"><span class="join-badge">用商业智慧护航</span><a href="#" target="_blank" class="cta-btn-link"><button class="cta-btn">立即申请</button></a></div>
+                </div>
+                <div class="join-card">
+                    <h3>🏢 企业合作入口</h3>
+                    <p>携手 JA 中国，支持核心课程年度赞助、赛事专项冠名或企业开放日，打造有深度的企业社会责任（CSR/ESG）公益典范。</p>
+                    <div class="join-action"><span class="join-badge">共创公益影响力</span><a href="#" target="_blank" class="cta-btn-link"><button class="cta-btn">申请合作</button></a></div>
+                </div>
+                <div class="join-card">
+                    <h3>🏫 学校项目申请</h3>
+                    <p>期待将成熟系统、广受好评的双创商业实战、生涯规划及财务素养实践课程，引入您学校日常的综合实践课堂吗？</p>
+                    <div class="join-action"><span class="join-badge">跨学科教育实践</span><a href="#" target="_blank" class="cta-btn-link"><button class="cta-btn">提交申请</button></a></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 全局常驻底部：合作伙伴通用组件 -->
+    <footer class="global-sponsor-footer">
+        <div class="sponsor-title">2026 JA 中国项目年度核心合作伙伴</div>
+        <div class="sponsor-grid">
+            <div class="logo-box"><img src="img/05_sponsor_logo1.png" alt="合作伙伴 LOGO 1"></div>
+            <div class="logo-box"><img src="img/05_sponsor_logo2.png" alt="合作伙伴 LOGO 2"></div>
+            <div class="logo-box"><img src="img/05_sponsor_logo3.png" alt="合作伙伴 LOGO 3"></div>
+            <div class="logo-box"><img src="img/05_sponsor_logo4.png" alt="合作伙伴 LOGO 4"></div>
+        </div>
+    </footer>
+
+    <!-- 前端交互控制核心脚本 -->
+    <script>
+        // 🚀 20强完整参赛团队库数据（已升级独立产品图片路径，覆盖 team_01.png 到 team_20.png）
+        const full20TeamsData = [
+            { id: "01", school: "北大附中朝阳未来学校", name: "掌上时光学生公司", product: "药心安", desc: "我们洞察到，中老年人群缺乏适老、闭环的依从性工具。药心安通过提醒、确认、记录与家属看板，帮助长期服药者减少漏服与重复服。", slogan: "我们是掌上时光学生公司，正在角逐2026COY，一起来见证我们的学习成果，快来点赞吧！" },
+            { id: "02", school: "北京市第二中学", name: "Up!学生公司", product: "磁吸痛板", desc: "主营磁吸痛板，支持多款式定制。传统扎包耗时1-2个小时，消耗大量塑料、胶水，旧痛板无法重复利用；磁吸款免胶免扎，快速排版，可重复使用，省时环保，轻松打造痛包造型。", slogan: "我们是Up!学生公司，正在角逐2026COY，一起来见证我们的学习成果，快来点赞吧！" },
+            { id: "03", school: "北京市第二中学", name: "Luxy学生公司", product: "双层骑行手机支架", desc: "从“骑行时手机导航与充电难以兼顾”的问题出发，产品上层固定手机导航，下层放置充电宝，使骑行者能够在导航、接单、联系客户的同时为手机供电。", slogan: "我们是Luxy学生公司，正在角逐2026COY，一起来见证我们的学习成果，快来点赞吧！" },
+            { id: "04", school: "北京市第一0一中学", name: "clover学生公司", product: "蛋壳再生扩圆明园扩香石", desc: "产品以圆明园大水法为外形，蛋壳再生材质，分三款香气，可应用于卧室、车载等多种场景。旨在通过文创唤醒民族记忆、增强爱国情怀。", slogan: "我们是clover学生公司，正在角逐2026COY，一起来见证我们的学习成果，快来点赞吧！" },
+            { id: "05", school: "北京市第一0一中学", name: "硫酸钡学生公司", product: "校园动物毛绒徽章 红毛猩猩保护公益活动徽章", desc: "依托校园文创给客户带来陪伴感归属感，结合本校专属IP，携手公益组织宣传动物保护，填补本地化、校园专属解压文创的空白。专注解决 student 存在解压装饰、桌面收纳、纪念送礼的刚需。", slogan: "我们是硫酸钡学生公司，正在角逐2026COY，一起来见证我们的学习成果，快来点赞吧！" },
+            { id: "06", school: "北京市玉渊潭中学", name: "衔春枝学生公司", product: "小鸟NFC挂件", desc: "NFC毛绒小鸟挂件，碰触唤醒线上养成互动，可喂食换装、AI回信、解锁科普、好友串门。产品切中年轻人治愈陪伴与环保参与的双重需求，以“实体触碰+数字陪伴+公益捐赠”让毛绒玩具成为持续的情感连接。", slogan: "我们是衔春枝学生公司，正在角逐2026COY，一起来见证我们的学习成果，快来点赞吧！" },
+            { id: "07", school: "长沙市长郡中学国际部", name: "猫头鹰茶栈学生公司", product: "便携式泡茶杯", desc: "猫头鹰便携泡茶杯，藤编隔热杯套加折叠杯身，自带滤茶结构，兼具文艺设计与实用泡茶功能，满足年轻人通勤、户外随时轻饮茶的便携需求。", slogan: "我们是猫头鹰茶栈学生公司，正在角逐2026COY，一起来见证我们的学习成果，快来点赞吧！" },
+            { id: "08", school: "长沙市同升湖高级中学", name: "湘茫茫学生公司", product: "“霸芒”发声型玩偶", desc: "“霸芒”是湘方言主题发声文创玩偶，内置录音发声模块，融合湖南本土方言文化，兼具装饰、陪伴功能。我们洞察到年轻群体、来湘游客缺少承载湖湘地域特色、可互动的轻量化文创藏品的市场需求。", slogan: "我们是湘茫茫学生公司，正在角逐2026COY，一起来见证我们的学习成果，快来点赞吧！" },
+            { id: "09", school: "长沙市同升湖高级中学", name: "星黎·祈明学生公司", product: "城市系列刮画书签", desc: "公司核心产品为城市系列刮画，以城市地标、和文化景观等为主要内容，消费者刮开黑色涂层，隐藏的彩色线条逐渐显现，形成“刮开黑夜、点亮城市”的独特体验。同时附加能够让你自定义城市书签的小程序，带来多元体验", slogan: "我们是星黎·祈明学生公司，正在角逐2026COY，一起来见证我们的学习成果，快来点赞吧！" },
+            { id: "10", school: "广东实验中学深圳学校", name: "明隅非遗纸艺文创学生公司", product: "非遗纸雕灯/剪纸首饰/发光相框", desc: "我们提供原创非遗纸雕灯、书签、胸针、发光相框文创产品，兼具文化内涵与设计感，非遗传承面临断层，文创市场“中间地带”缺失——低价缺文化，高价买不起。我们以年轻人的设计语言重新表达非遗，让剪纸融入日常生活。", slogan: "We are 明隅非遗纸艺文创学生公司，正在角逐2026COY，一起来见证我们的学习成果，快来点赞吧！！" },
+            { id: "11", school: "上海商业会计学校", name: "无忧树洞学生公司", product: "手工警报器", desc: "起点源于一个朴素的追问： 安全防护产品， 是否不必始终带着冰冷的戒备感？带着这一思考，团队以“秘密交给树洞，安全留给无忧”为初心，打造了区别于传统安防产品的手作安全报警器。", slogan: "我们是无忧树洞学生公司，正在角逐2026COY，一起来见证我们的学习成果，快来点赞吧！" },
+            { id: "12", school: "上海市商业学校", name: "U-Lab怪萌鹦鹉社学生公司", product: "原创IP“乖崽”系列产品", desc: "当代年轻人面临学业/职场压力，渴望情绪慰藉与自我接纳，我们 student 公司旨在传递“乖崽陪你，不完美也没关系！”的情绪价值。而市面上缺乏具有“接纳自我不完美”共鸣感的原创治愈IP，且现有文创多缺少温度。", slogan: "我们是U-Lab怪萌鹦鹉社学生公司，正在角逐2026COY，一起来见证我们的学习成果，快来点赞吧！" },
+            { id: "13", school: "上海市医药学校", name: "经纬牵学生公司", product: "智能宠物胸背", desc: "我们发现养宠家庭常面临宠物走失、夜间出行不安全和陌生环境焦虑等问题。经纬牵提供智能宠物胸背及小程序服务，集四模定位、电子围栏、夜间提醒与中草药香珠安抚于一体，实现更安心的日常守护，让爱不丢，心不慌", slogan: "我们是经纬牵学生公司，正在角逐2026COY，一起来见证我们的学习成果，快来点赞吧！" },
+            { id: "14", school: "上海市医药学校", name: "气析学生公司", product: "气析中药香薰", desc: "气析主打安全无火、中药养生香薰，无明火杜绝火灾风险，采用天然草本替代工业香精，气味温润舒适，兼具安神养生效果。经调研，市面香薰普遍存在易燃、化学有害物质、气味劣质等痛点，安全养生型产品缺口大。", slogan: "我们是气析学生公司，正在角逐2026COY，一起来见证我们的学习成果，快来点赞吧！" },
+            { id: "15", school: "四川省成都七中育才高中", name: "树洞学生公司", product: "“树洞”智能疗愈卡牌", desc: "公司团队观察到同龄人普遍面临学业压力与情绪波动，却缺乏安全、便捷的宣泄出口，团队研发并销售融合NFC智能交互技术与艺术设计的情绪疗愈卡牌，提供低成本、高隐私、随时可得的情绪自我关怀工具。", slogan: "我们是树洞学生公司，正在角逐2026COY，一起来见证我们的学习成果，快来点赞吧！" },
+            { id: "16", school: "四川省成都市树德实验高级中学", name: "Brown Zone学生公司", product: "幕后之手AI经济学模拟沙盘", desc: "本公司致力于开发一款 AI 驱动的沉浸式经济学沙盘游戏，专为中学生解决财商教育中“理论枯燥、缺乏实操”的痛点。我们通过自主研发的宏观经济引擎，将 AP 经济学考点融入高保真虚拟股市与创业经营。", slogan: "我们是Brown Zone学生公司，正在角逐2026COY，一起来见证我们的学习成果，快来点赞吧！" },
+            { id: "17", school: "四川省成都市玉林中学", name: "一颗菜的旅行学生公司", product: "原创角色+服装设计", desc: "主营原创角色（OC）人设加故事及服装设计，通过线上拍卖进行销售。旨在宣传文化/传统/环保等。市场对“情绪价值”和“陪伴感”的需求持续增长，市面上虽有类似角色售卖，但“有故事的角色”稀缺。", slogan: "我们是一颗菜的旅行学生公司，正在角逐2026COY，一起来见证我们的学习成果，快来点赞吧！" },
+            { id: "18", school: "西安高新第一中学国际课程班", name: "ADS学生公司", product: "NFC文创播放器", desc: "市面常规 NFC 文创功能单一，仅支持单首歌曲播放，缺少实用属性与标准化定制服务。主打无源 NFC 数字化音频视频定制文创，兼顾日常实用性、纪念价值与低碳环保理念。", slogan: "我们是ADS学生公司，正在角逐2026COY，一起来见证我们的学习成果，快来点赞吧！" },
+            { id: "19", school: "西安高新第一中学国际课程班", name: "Caffeine学生公司", product: "Caffeine公诉", desc: "为解决现在社会大量废弃咖啡，渣与咖啡豆浪费的空间，我们变废为宝，当他们转化为美观实用的手串杯垫与镜子等产品", slogan: "我们是Caffeine学生公司，正在角逐2026COY，一起来见证我们的学习成果，快来点赞吧！" },
+            { id: "20", school: "西安市第八十三中学", name: "知叶KnowingLeaf学生公司", product: "叶小方", desc: "知叶三合一多功能智能文具，面向学生与职场人群，打破传统笔筒单一收纳局限。集成照明、计时、数据管理功能，适配夜间学习、自律打卡、碎片时间管理，分层设计分区清晰，兼顾实用与创新。", slogan: "我们是知叶KnowingLeaf学生公司，正在角逐2026COY，一起来见证我们的学习成果，快来点赞吧！" }
+        ];
+
+        // 🚀 交互逻辑：通过平滑滚动锚点来实现“一站式浏览”与“专属导航”兼容
+        function navTo(targetId) {
+            // 1. 更新 PC 端和移动端导航按钮的激活样式
+            document.querySelectorAll('.bottom-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.pc-nav-links a').forEach(a => a.classList.remove('active'));
+
+            const activeId = targetId === 'home' ? 'home' : targetId;
+            const mobileBtn = document.getElementById(`nav-${activeId}`);
+            if (mobileBtn) mobileBtn.classList.add('active');
+
+            const pcBtn = document.getElementById(`pc-nav-${activeId}`);
+            if (pcBtn) pcBtn.classList.add('active');
+
+            // 2. 锚点滑动滚动定位
+            const anchorElement = document.getElementById(`section-${targetId}`);
+            if (anchorElement) {
+                // 如果是 PC 端，需要减去顶部粘性导航栏的 70px 高度
+                const headerOffset = window.innerWidth >= 768 ? 85 : 15;
+                const elementPosition = anchorElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
+            } else {
+                // 回到首页顶部
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            }
+        }
+
+        function renderTeams(data) {
+            const grid = document.getElementById('teamGrid');
+            if(!grid) return;
+            grid.innerHTML = data.map(team => 
+                 `<div class="team-card" data-keywords="${team.school}${team.name}">\
+                      <div class="img-placeholder"><img src="img/team_${team.id}.png" alt="${team.name}产品图"></div>\
+                      <div class="card-body">\
+                          <div class="card-school">${team.school}</div>\
+                          <div class="card-name">${team.name}</div>\
+                          <div class="product-tag">${team.product}</div>\
+                          <p class="card-desc">${team.desc}</p>\
+                      </div>\
+                      <div class="card-footer">\
+                          <div class="vote-slogan">"${team.slogan}"</div>\
+                          <button class="vote-btn" onclick="alert('感谢您的支持，点赞成功！')">👍 点赞支持</button>\
+                      </div>\
+                 </div>`
+            ).join('');
+        }
+
+        function switchStarSub(subId) {
+            document.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.star-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(`sub-btn-${subId}`).classList.add('active');
+            document.getElementById(`star-${subId}-sec`).classList.add('active');
+        }
+
+        function filterTeams() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            document.querySelectorAll('.team-card').forEach(card => {
+                card.style.display = card.getAttribute('data-keywords').toLowerCase().includes(query) ? 'flex' : 'none';
+            });
+        }
+
+        function switchDate(dateStr) {
+            document.querySelectorAll('.date-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.timeline').forEach(t => t.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            document.getElementById(`time-${dateStr}`).classList.add('active');
+        }
+
+        function toggleFaq(header) {
+            const body = header.nextElementSibling;
+            body.style.display = body.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('【' + text + '】已成功复制到剪贴板！');
+            });
+        }
+
+        // 初始化渲染20强战队
+        window.onload = () => { renderTeams(full20TeamsData); };
+    </script>
+</body>
+</html>
