@@ -170,26 +170,24 @@
 
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; right: 0;
-            background: rgba(255,255,255,0.78);
+            background: rgba(255,255,255,0.95);
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             display: flex; z-index: 99;
-            border-top: 1px solid rgba(33,148,209,0.06);
+            border-top: 1px solid rgba(33,148,209,0.12);
+            box-shadow: 0 -2px 12px rgba(33,148,209,0.08);
         }
         .bottom-btn {
-            flex: 1; border: none; background: none; padding: 12px 0;
-            font-size: 0.72rem; font-weight: 600; color: var(--text-muted);
+            flex: 1; border: none; background: none; padding: 12px 0 10px;
+            font-size: 0.75rem; font-weight: 600; color: #8A9BAE;
             cursor: pointer; text-align: center; transition: var(--transition);
             border-top: 2.5px solid transparent;
         }
         .bottom-btn.active {
             color: var(--primary); font-weight: 700;
-            border-top: 2.5px solid transparent;
-            background-image: linear-gradient(var(--primary), var(--primary));
-            background-size: 100% 2.5px;
-            background-repeat: no-repeat;
-            background-position: top;
+            background: rgba(33,148,209,0.06);
+            border-top: 2.5px solid var(--primary);
         }
-        .bottom-btn.nav-live { color: var(--primary); }
+        .bottom-btn.nav-live { color: var(--primary); font-weight: 700; }
 
         .floating-container {
             position: fixed; right: 20px; bottom: 90px;
@@ -1003,14 +1001,21 @@
         }
         .sponsor-grid {
             display: grid; grid-template-columns: repeat(2, 1fr);
-            gap: 12px; max-width: var(--max-width); margin: 0 auto;
+            gap: 14px; max-width: var(--max-width); margin: 0 auto;
         }
         .sponsor-grid .logo-box {
-            height: 50px; background: transparent !important;
+            height: 60px; background: rgba(255,255,255,0.9) !important;
+            border-radius: 12px; overflow: hidden;
+            border: 1px solid rgba(33,148,209,0.06);
             transition: var(--transition);
             display: flex; align-items: center; justify-content: center;
+            padding: 8px 12px;
         }
-        .sponsor-grid .logo-box:hover { transform: scale(1.03); }
+        .sponsor-grid .logo-box img {
+            max-width: 100%; max-height: 100%;
+            object-fit: contain; object-position: center;
+        }
+        .sponsor-grid .logo-box:hover { transform: scale(1.03); box-shadow: var(--shadow-sm); }
 
         img { background: transparent !important; background-color: transparent !important; border: none !important; outline: none !important; box-shadow: none !important; }
 
@@ -1484,7 +1489,6 @@ JA中国成立于1993年。三十多年来，我们始终坚持"以学生为中�
 
     <!-- 全局常驻底部：合作伙伴通用组件 -->
     <footer class="global-sponsor-footer">
-        <div class="sponsor-title">2026 JA 中国项目年度核心合作伙伴</div>
         <div class="sponsor-grid">
             <div class="logo-box"><img src="img/05_sponsor_logo1.png" alt="合作伙伴 LOGO 1"></div>
             <div class="logo-box"><img src="img/05_sponsor_logo2.png" alt="合作伙伴 LOGO 2"></div>
