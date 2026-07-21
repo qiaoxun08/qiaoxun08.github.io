@@ -103,8 +103,8 @@
         .pc-nav-links { display: flex; gap: 24px; list-style: none; }
         .pc-nav-links li a { text-decoration: none; color: var(--secondary-dark); font-weight: 600; font-size: 1rem; cursor: pointer; transition: var(--transition); }
         .pc-nav-links li a.active, .pc-nav-links li a:hover { color: var(--primary); }
-        .pc-nav-links li a.nav-live { color: var(--accent-red); font-weight: 700; }
-        .pc-nav-links li a.nav-live:hover { color: #B81E2E; }
+        .pc-nav-links li a.nav-live { color: var(--primary); font-weight: 700; }
+        .pc-nav-links li a.nav-live:hover { color: var(--primary-dark); }
 
         /* 手机端底部导航 */
         .bottom-nav {
@@ -129,7 +129,7 @@
             text-align: center;
         }
         .bottom-btn.active { color: var(--primary); font-weight: 700; border-top: 3px solid var(--primary); }
-        .bottom-btn.nav-live { color: var(--accent-red); }
+        .bottom-btn.nav-live { color: var(--primary); }
 
         /* 右侧悬浮直播按钮 */
         .floating-container {
@@ -159,12 +159,12 @@
             transition: var(--transition);
             line-height: 1.2;
         }
-        .float-btn.live { background-color: var(--accent-red); animation: pulse 2s infinite; }
-        .float-btn.photo { background-color: var(--primary); }
+        .float-btn.live { background-color: var(--primary); animation: pulse 2s infinite; }
+        .float-btn.photo { background-color: var(--teal); }
         @keyframes pulse {
-            0 { box-shadow: 0 0 0 0 rgba(219, 37, 55, 0.4); }
-            70% { box-shadow: 0 0 0 12px rgba(219, 37, 55, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(219, 37, 55, 0); }
+            0 { box-shadow: 0 0 0 0 rgba(32, 150, 211, 0.4); }
+            70% { box-shadow: 0 0 0 12px rgba(32, 150, 211, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(32, 150, 211, 0); }
         }
 
         /* ==========================================================================
@@ -250,12 +250,12 @@
         }
         .carousel-track {
             display: flex;
-            width: 300%;
+            width: 1100%;
             height: 100%;
             transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
         .carousel-slide {
-            width: 33.333%;
+            width: 9.0909%;
             height: 100%;
             flex-shrink: 0;
             position: relative;
@@ -275,8 +275,8 @@
             z-index: 10;
         }
         .carousel-dot {
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
             background: rgba(255,255,255,0.5);
             cursor: pointer;
@@ -284,8 +284,8 @@
         }
         .carousel-dot.active {
             background: var(--accent-light);
-            width: 20px;
-            border-radius: 4px;
+            width: 16px;
+            border-radius: 3px;
         }
         .carousel-btn {
             position: absolute;
@@ -344,7 +344,7 @@
 
         /* 直播信息区块 */
         .live-info-card {
-            background: linear-gradient(135deg, #DB2537 0%, #B81E2E 100%);
+            background: var(--gradient-cta);
             color: white;
             border-radius: var(--radius-md);
             padding: 20px;
@@ -352,7 +352,7 @@
             box-shadow: var(--shadow-md);
         }
         .live-info-card h3 { font-size: 1.1rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-        .live-info-card h3 .live-dot { width: 10px; height: 10px; background: white; border-radius: 50%; animation: pulse 1.5s infinite; }
+        .live-info-card h3 .live-dot { width: 10px; height: 10px; background: var(--accent-light); border-radius: 50%; animation: pulse 1.5s infinite; }
         .live-links { display: flex; flex-direction: column; gap: 12px; }
         .live-link-item {
             display: flex;
@@ -444,14 +444,16 @@
         }
         .vote-btn:hover { transform: scale(1.05); }
         .vote-btn:active { transform: scale(0.95); }
-        .vote-btn.liked { background-color: var(--accent-red); color: white; box-shadow: 0 2px 6px rgba(219,37,55,0.3); }
+        .vote-btn.liked { background-color: var(--primary); color: white; box-shadow: 0 2px 6px rgba(32,150,211,0.3); }
         .like-count { font-size: 0.75rem; color: var(--text-muted); margin-left: 4px; font-weight: 400; }
 
         .guest-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-        .guest-card { background: white; padding: 16px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); text-align: center; }
-        .guest-card .img-placeholder { width: 70px; height: 70px; border-radius: 50%; margin: 0 auto 10px; }
-        .guest-name { font-size: 0.95rem; font-weight: bold; color: var(--secondary-dark); }
-        .guest-title { font-size: 0.75rem; color: var(--text-muted); }
+        .guest-card { background: white; padding: 16px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); text-align: center; transition: var(--transition); }
+        .guest-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+        .guest-card .img-placeholder { width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 10px; overflow: hidden; }
+        .guest-card .img-placeholder img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+        .guest-name { font-size: 0.95rem; font-weight: bold; color: var(--secondary-dark); margin-bottom: 2px; }
+        .guest-title { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
 
         /* ==========================================================================
            6. PAGE 4: 大赛指南 & FAQ
@@ -470,8 +472,12 @@
         .event-title { font-weight: 600; color: var(--secondary-dark); font-size: 0.95rem; }
 
         .faq-item { background: white; margin-bottom: 12px; border-radius: 8px; box-shadow: var(--shadow-sm); overflow: hidden; }
-        .faq-header { background: white; padding: 14px 16px; font-weight: 600; font-size: 0.92rem; color: var(--secondary-dark); display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
-        .faq-body { display: none; padding: 16px; border-top: 1px solid #F2F4F4; font-size: 0.88rem; color: var(--text-dark); background-color: #FAFBFB; text-align: justify; }
+        .faq-header { background: white; padding: 14px 16px; font-weight: 600; font-size: 0.92rem; color: var(--secondary-dark); display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: var(--transition); }
+        .faq-header:hover { background: #F8FBFC; }
+        .faq-header .faq-arrow { transition: transform 0.3s ease; display: inline-block; }
+        .faq-header.open .faq-arrow { transform: rotate(180deg); }
+        .faq-body { max-height: 0; overflow: hidden; padding: 0 16px; border-top: 1px solid #F2F4F4; font-size: 0.88rem; color: var(--text-dark); background-color: #FAFBFB; text-align: justify; transition: max-height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), padding 0.3s ease; }
+        .faq-body.open { max-height: 600px; padding: 16px; }
         .faq-body strong { color: var(--secondary-dark); }
         .faq-body ul { padding-left: 18px; margin-top: 6px; margin-bottom: 10px; }
         .faq-body li { margin-bottom: 4px; }
@@ -529,6 +535,39 @@
         img { background: transparent !important; background-color: transparent !important; border: none !important; outline: none !important; box-shadow: none !important; }
 
         /* ==========================================================================
+           10. 入场动画 & 滚动渐显
+           ========================================================================== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-in {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .animate-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* 时间线交错延迟 */
+        .timeline-item:nth-child(1) { transition-delay: 0s; }
+        .timeline-item:nth-child(2) { transition-delay: 0.08s; }
+        .timeline-item:nth-child(3) { transition-delay: 0.16s; }
+        .timeline-item:nth-child(4) { transition-delay: 0.24s; }
+        /* 卡片交错延迟 */
+        .home-card:nth-child(1) { transition-delay: 0s; }
+        .home-card:nth-child(2) { transition-delay: 0.1s; }
+        .home-card:nth-child(3) { transition-delay: 0.2s; }
+        .team-card:nth-child(1), .team-card:nth-child(2), .team-card:nth-child(3), .team-card:nth-child(4) { transition-delay: 0s; }
+        .team-card:nth-child(5), .team-card:nth-child(6), .team-card:nth-child(7), .team-card:nth-child(8) { transition-delay: 0.1s; }
+        .guest-card:nth-child(1), .guest-card:nth-child(2) { transition-delay: 0s; }
+        .guest-card:nth-child(3), .guest-card:nth-child(4) { transition-delay: 0.08s; }
+        .guest-card:nth-child(5), .guest-card:nth-child(6) { transition-delay: 0.16s; }
+        .guest-card:nth-child(7), .guest-card:nth-child(8) { transition-delay: 0.24s; }
+        .guest-card:nth-child(9), .guest-card:nth-child(10) { transition-delay: 0.32s; }
+
+        /* ==========================================================================
            9. 响应式媒体查询
            ========================================================================== */
         @media (min-width: 768px) {
@@ -557,7 +596,7 @@
     <!-- 手机端顶部常驻 LOGO 栏 -->
     <div class="mobile-top-bar">
         <div class="logo-box">
-            <img src="img/01_pc_logo.png"alt="JA中国 LOGO">
+            <img src="img/01_pc_logo.png" alt="JA中国 LOGO">
         </div>
         <div class="logo-text">2026 COY 全国学生公司大赛</div>
     </div>
@@ -577,7 +616,7 @@
                 <li><a id="pc-nav-teams" onclick="navTo('teams')">璀璨星光</a></li>
                 <li><a id="pc-nav-guide" onclick="navTo('guide')">赛事指南</a></li>
                 <li><a id="pc-nav-join" onclick="navTo('join')">加入我们</a></li>
-                <li><a id="pc-nav-live" class="nav-live" onclick="navTo('live')">🔴 直播</a></li>
+                <li><a id="pc-nav-live" class="nav-live" onclick="navTo('live')">📺 直播</a></li>
             </ul>
         </div>
     </header>
@@ -589,13 +628,13 @@
         <button class="bottom-btn" id="nav-teams" onclick="navTo('teams')">璀璨星光</button>
         <button class="bottom-btn" id="nav-guide" onclick="navTo('guide')">赛事指南</button>
         <button class="bottom-btn" id="nav-join" onclick="navTo('join')">加入我们</button>
-        <button class="bottom-btn nav-live" id="nav-live" onclick="navTo('live')">🔴 直播</button>
+        <button class="bottom-btn nav-live" id="nav-live" onclick="navTo('live')">📺 直播</button>
     </nav>
 
     <!-- 右侧常驻双流直播悬浮窗 -->
     <div class="floating-container">
-        <button class="float-btn live" onclick="navTo('live')">视频<br>直播</button>
-        <button class="float-btn photo" onclick="navTo('live')">照片<br>直播</button>
+        <button class="float-btn live" onclick="navTo('live')">📺<br>直播</button>
+        <button class="float-btn photo" onclick="navTo('live')">📸<br>照片</button>
     </div>
 
     <!-- 核心内容切换包装层 -->
@@ -628,15 +667,17 @@
                     <h2 class="section-title" style="margin-top:0;">2026 COY 我们来啦！</h2>
                     <div class="carousel-wrapper" id="heroCarousel">
                         <div class="carousel-track" id="carouselTrack">
-                            <div class="carousel-slide">
-                                <img src="img/02_banner_visual.jpg" alt="COY精彩瞬间 1">
-                            </div>
-                            <div class="carousel-slide">
-                                <img src="img/02_banner_visual.jpeg" alt="COY精彩瞬间 2">
-                            </div>
-                            <div class="carousel-slide">
-                                <img src="img/02_growth_path.jpg" alt="COY精彩瞬间 3">
-                            </div>
+                            <div class="carousel-slide"><img src="img/Develop/1.png" alt="COY精彩瞬间 1"></div>
+                            <div class="carousel-slide"><img src="img/Develop/2.png" alt="COY精彩瞬间 2"></div>
+                            <div class="carousel-slide"><img src="img/Develop/3.png" alt="COY精彩瞬间 3"></div>
+                            <div class="carousel-slide"><img src="img/Develop/4.png" alt="COY精彩瞬间 4"></div>
+                            <div class="carousel-slide"><img src="img/Develop/5.png" alt="COY精彩瞬间 5"></div>
+                            <div class="carousel-slide"><img src="img/Develop/6.png" alt="COY精彩瞬间 6"></div>
+                            <div class="carousel-slide"><img src="img/Develop/7.png" alt="COY精彩瞬间 7"></div>
+                            <div class="carousel-slide"><img src="img/Develop/8.png" alt="COY精彩瞬间 8"></div>
+                            <div class="carousel-slide"><img src="img/Develop/9.png" alt="COY精彩瞬间 9"></div>
+                            <div class="carousel-slide"><img src="img/Develop/10.png" alt="COY精彩瞬间 10"></div>
+                            <div class="carousel-slide"><img src="img/Develop/11.png" alt="COY精彩瞬间 11"></div>
                         </div>
                         <button class="carousel-btn prev" onclick="carouselPrev()">‹</button>
                         <button class="carousel-btn next" onclick="carouselNext()">›</button>
@@ -644,6 +685,14 @@
                             <div class="carousel-dot active" onclick="carouselTo(0)"></div>
                             <div class="carousel-dot" onclick="carouselTo(1)"></div>
                             <div class="carousel-dot" onclick="carouselTo(2)"></div>
+                            <div class="carousel-dot" onclick="carouselTo(3)"></div>
+                            <div class="carousel-dot" onclick="carouselTo(4)"></div>
+                            <div class="carousel-dot" onclick="carouselTo(5)"></div>
+                            <div class="carousel-dot" onclick="carouselTo(6)"></div>
+                            <div class="carousel-dot" onclick="carouselTo(7)"></div>
+                            <div class="carousel-dot" onclick="carouselTo(8)"></div>
+                            <div class="carousel-dot" onclick="carouselTo(9)"></div>
+                            <div class="carousel-dot" onclick="carouselTo(10)"></div>
                         </div>
                     </div>
                 </div>
@@ -651,27 +700,27 @@
 
             <h2 class="section-title">快速探索 2026 COY</h2>
             <div class="card-stream">
-                <div class="home-card">
+                <div class="home-card animate-in">
                     <div>
-                        <div class="home-card-tag">硬核青年 | 3分钟读懂 COY</div>
-                        <div class="home-card-title">走进"JA 学生公司"</div>
-                        <div class="home-card-body">在这里，您将见证中学生如何将自己的创新构想转化为真实的商业运作。只需3分钟，带你领略当代中学生硬核的创业力量，共同见证未来商业领袖的蜕变与成长！</div>
+                        <div class="home-card-tag">硬核青年 | 3分钟读懂COY</div>
+                        <div class="home-card-title">走进"JA学生公司"</div>
+                        <div class="home-card-body">在这里，高中生不只是学习创业，更是在真实商业实践中探索未来。3分钟，带你了解他们的成就之路——把梦想变成行动，而在困难面前坚持前行的勇气，才是他们成长的"隐形奖杯"。</div>
                     </div>
                     <button class="cta-btn" onclick="navTo('about')">立即探索</button>
                 </div>
-                <div class="home-card">
+                <div class="home-card animate-in">
                     <div>
-                        <div class="home-card-tag">高光时刻 | 全阵容集结</div>
-                        <div class="home-card-title">璀璨星光（优秀团队）</div>
-                        <div class="home-card-body">本届全国大赛汇聚了在这一学年里"边学习、边创业"成功晋级的巅峰战队，更有来自各大企业的资深高管与嘉宾倾情加盟，共同助力教育公益！</div>
+                        <div class="home-card-tag">璀璨星光 | 全阵容集结</div>
+                        <div class="home-card-title">优秀团队</div>
+                        <div class="home-card-body">本届全国大赛汇聚了在这一学年里"边学习、边创业"并脱颖而出的优秀学生团队，更有来自企业界与教育界的嘉宾齐聚现场，以专业视角为青年的创业实践赋能，共同见证青少年的探索、突破与成就之路。</div>
                     </div>
                     <button class="cta-btn" onclick="navTo('teams')">查看阵容</button>
                 </div>
-                <div class="home-card">
+                <div class="home-card animate-in">
                     <div>
                         <div class="home-card-tag">参赛必看 | 一站式服务</div>
-                        <div class="home-card-title">赛事指南（日程规则）</div>
-                        <div class="home-card-body">指南在手，拒绝迷路！创意市集、路演答辩、评委面试三大板块的核心规则与北京出行指南已全量整合，助你轻装上阵、高效参赛。</div>
+                        <div class="home-card-title">赛事指南</div>
+                        <div class="home-card-body">拒绝迷路！比赛期间所需的日程安排、场馆交通、注意事项等重要信息已为您全量整合。一键查阅，助你轻装上阵，全神贯注迎接挑战！</div>
                     </div>
                     <button class="cta-btn" onclick="navTo('guide')">点击查阅</button>
                 </div>
@@ -685,27 +734,26 @@
             <h2 class="section-title" id="section-about">关于 JA 中国</h2>
             <p style="font-size:0.95rem; color:var(--text-dark); margin-bottom:15px; text-align:justify;">
                 JA（Junior Achievement，青年成就）是全球最大的致力于青少年职业发展、财务素养和创业教育的非营利教育组织之一。
-JA 中国成立于 1993 年。三十多年来，我们始终坚持"以学生为中心"的教育理念：
+JA中国成立于1993年。三十多年来，我们始终坚持"以学生为中心"的教育理念：
 - <b>跨界链接</b>：深度链接企业与学校。
 - <b>志愿精神</b>：将企业的社会责任与员工的志愿者精神，转化为系统化支持学生项目化学习的实践课程。
-- <b>育人目标</b>：致力于培养具有社会责任感和创新精神的未来商业及社区领袖。
+- <b>育人使命</b>：激励和培养中国青少年以品格和能力在全球经济中成功。
             </p>
-            <div class="data-badge-container">
-                <div class="data-badge"><div class="data-num">30+年</div><div class="data-label">深耕中国实践教育</div></div>
+            <div class="data-badge-container animate-in">
+                <div class="data-badge"><div class="data-num">32年</div><div class="data-label">深耕中国实践教育</div></div>
                 <div class="data-badge"><div class="data-num">74城</div><div class="data-label">覆盖全国核心城市</div></div>
                 <div class="data-badge"><div class="data-num">800万+</div><div class="data-label">累计惠及青少年</div></div>
             </div>
 
             <h2 class="section-title">一分钟看懂 "JA 学生公司"</h2>
             <p style="font-size:0.9rem; color:var(--text-dark); background:white; padding:16px; border-radius:8px; box-shadow:var(--shadow-sm); text-align:justify; margin-bottom:20px;">
-这不仅是一门课程，更是一场真实的商业实战。
-2025-2026学年，《JA 学生公司》项目在北京、上海、成都、西安、长沙等近50所学校蓬勃开展。                
-在长达一学年的时间里，中学生们在学校老师与企业志愿者导师的指导和陪伴下，组建 2-6 人的创始团队，成立并运营一家真实的"学生公司"。他们需要直面真实的市场竞争，自负盈亏。<strong>最重要的是，项目一路上所有的核心商业决策，均由学生独立自主完成。</strong>
+<strong>这不仅是一门课程，更是一场真实的商业实战。</strong><br><br>
+2025-2026学年，《JA学生公司》项目在北京、上海、成都、西安、长沙等近50所学校开展。在长达一学年的时间里，中学生们在学校老师与企业志愿者导师的指导和陪伴下，组建2-6人的创始团队，成立并运营一家真实的"学生公司"。他们需要直面真实的市场竞争，自负盈亏。<strong>最重要的是，项目一路上所有的核心商业决策，均由学生独立自主完成。</strong>
             </p>
 
-            <h2 class="section-title">自主跨越的成长足迹</h2>
+            <h2 class="section-title">学生的足迹</h2>
             <p style="font-size:0.95rem; font-weight:700; color:var(--primary); margin-bottom:12px; text-align:center;">
-                加入学生公司项目 ➔ 运营实践 ➔ 清算结业 ➔ 地区大赛 ➔ 全国大赛（COY） ➔ 亚太大赛
+                加入学生公司项目 → 运营实践 → 清算结业 → 地区赛 → 全国大赛 → 亚太大赛
             </p>
             
             <div class="img-placeholder" style="width: 100%; aspect-ratio: 20 / 6; border-radius: var(--radius-md); margin-bottom: 20px;">
@@ -713,7 +761,7 @@ JA 中国成立于 1993 年。三十多年来，我们始终坚持"以学生为�
             </div>
 
             <div style="background: var(--gradient-hero); color:white; padding:18px; border-radius:8px; font-size:0.9rem; font-style:italic; line-height:1.7;">
-                "回顾这一年，你们跨越了反复修改方案的深夜，直面了团队的分歧与磨合。今天，你们终于站到了全国大赛（COY）的舞台！无论结果如何，你们都已经在这条硬核的创业实践路上，留下了青春最闪亮的印记！"
+                "回顾这一年，你们跨越了修改方案的深夜，直面了团队的分歧。今天，你们终于站到了全国赛（COY）的舞台！无论结果如何，你们都已经在这条硬核的创业路上留下了青春的正反馈！"
             </div>
         </section>
 
@@ -735,16 +783,18 @@ JA 中国成立于 1993 年。三十多年来，我们始终坚持"以学生为�
             </div>
 
             <div id="star-guests-sec" class="star-section">
-                <h3 class="section-title" style="font-size:1.1rem; border-color:var(--accent-light);">⚖️ 【评委阵容】（资料准备中）</h3>
+                <h3 class="section-title" style="font-size:1.1rem; border-color:var(--accent-light);">🤝 嘉宾/评委阵容</h3>
                 <div class="guest-grid">
-                    <div class="guest-card"><div class="img-placeholder"><img src="img/03_guest_avatar.png" alt="评委头像"></div><div class="guest-name">嘉宾预留席</div><div class="guest-title">企业高管 / 资深评委</div></div>
-                    <div class="guest-card"><div class="img-placeholder"><img src="img/03_guest_avatar.png" alt="评委头像"></div><div class="guest-name">嘉宾预留席</div><div class="guest-title">风险投资人 / 行业专家</div></div>
-                </div>
-
-                <h3 class="section-title" style="font-size:1.1rem; border-color:var(--accent-light);">🎤 【论坛嘉宾】（资料准备中）</h3>
-                <div class="guest-grid">
-                    <div class="guest-card"><div class="img-placeholder"><img src="img/03_guest_avatar.png" alt="嘉宾头像"></div><div class="guest-name">嘉宾预留席</div><div class="guest-title">青年创业领袖</div></div>
-                    <div class="guest-card"><div class="img-placeholder"><img src="img/03_guest_avatar.png" alt="嘉宾头像"></div><div class="guest-name">嘉宾预留席</div><div class="guest-title">学术界重磅导师</div></div>
+                    <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/刘佳岩星竞威武集团.jpg" alt="刘佳岩"></div><div class="guest-name">刘佳岩</div><div class="guest-title">星竞威武集团 企业社会责任总监</div></div>
+                    <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/王昱东北京国际设计周有限公司.jpg" alt="王昱东"></div><div class="guest-name">王昱东</div><div class="guest-title">北京国际设计周有限公司 董事长</div></div>
+                    <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/郝庭帅天津世纪集团有限公司.jpg" alt="郝庭帅"></div><div class="guest-name">郝庭帅</div><div class="guest-title">天津世纪集团有限公司 总经理</div></div>
+                    <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/李佳璐北京发那科.jpg" alt="李佳璐"></div><div class="guest-name">李佳璐</div><div class="guest-title">北京发那科 品牌管理与推广部部长</div></div>
+                    <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/赵雪峰中共邢台市驻京流动党委.jpg" alt="赵雪峰"></div><div class="guest-name">赵雪峰</div><div class="guest-title">中共邢台市驻京流动党委副书记</div></div>
+                    <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/徐文阁河北威县驻京流动党员党委.jpg" alt="徐文阁"></div><div class="guest-name">徐文阁</div><div class="guest-title">河北威县驻京流动党员党委 书记</div></div>
+                    <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/蔡广明CAROL_CAIUPS.jpg" alt="蔡广明"></div><div class="guest-name">蔡广明</div><div class="guest-title">UPS 销售培训经理</div></div>
+                    <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/王云彬JA_China.jpg" alt="王云彬"></div><div class="guest-name">王云彬</div><div class="guest-title">JA China Executive Director</div></div>
+                    <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/黄皞森隆集团.jpg" alt="黄皞"></div><div class="guest-name">黄皞</div><div class="guest-title">森隆集团 总裁</div></div>
+                    <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/徐雯香港德林控股集团.jpg" alt="徐雯"></div><div class="guest-name">徐雯</div><div class="guest-title">香港德林控股集团 合伙人</div></div>
                 </div>
             </div>
         </section>
@@ -755,62 +805,67 @@ JA 中国成立于 1993 年。三十多年来，我们始终坚持"以学生为�
         <section id="page-guide" class="page-content container">
             <h2 class="section-title" id="section-guide">大赛指南 & 规范</h2>
             <div class="date-tabs">
-                <button class="date-btn active" id="btn-d1" onclick="switchDate('7月23日')">7月23日<br>大赛启航</button>
-                <button class="date-btn" id="btn-d2" onclick="switchDate('7月24日')">7月24日<br>创意市集</button>
-                <button class="date-btn" id="btn-d3" onclick="switchDate('7月25日')">7月25日<br>巅峰决战</button>
+                <button class="date-btn active" id="btn-d1" onclick="switchDate('7月23日')">7月23日 周四<br>大赛启航</button>
+                <button class="date-btn" id="btn-d2" onclick="switchDate('7月24日')">7月24日 周五<br>创意市集 🔓</button>
+                <button class="date-btn" id="btn-d3" onclick="switchDate('7月25日')">7月25日 周六<br>巅峰决战</button>
             </div>
 
             <div id="time-7月23日" class="timeline active">
-                <div class="timeline-item"><div class="timeline-card"><div class="time-box">09:00-09:50</div><div class="event-title">🌅 大赛开幕式（请全员着正装出席）</div></div></div>
-                <div class="timeline-item"><div class="timeline-card"><div class="time-box">10:00-12:00</div><div class="event-title">🗣️ 评委闭门面试（上半场）</div></div></div>
-                <div class="timeline-item"><div class="timeline-card"><div class="time-box">13:00-15:30</div><div class="event-title">🗣️ 评委闭门面试（下半场）</div></div></div>
-                <div class="timeline-item"><div class="timeline-card"><div class="time-box">16:00-18:00</div><div class="event-title">🧠 Titan 商业模拟挑战大赛</div></div></div>
+                <div class="timeline-item"><div class="timeline-card"><div class="time-box">09:00-09:50</div><div class="event-title">🌅 开幕式</div></div></div>
+                <div class="timeline-item"><div class="timeline-card"><div class="time-box">09:50-11:05</div><div class="event-title">🤝 破冰活动</div></div></div>
+                <div class="timeline-item"><div class="timeline-card"><div class="time-box">11:05-11:30</div><div class="event-title">📋 师生说明会</div></div></div>
+                <div class="timeline-item"><div class="timeline-card"><div class="time-box">13:00-17:30</div><div class="event-title">🧠 Titan工作坊</div></div></div>
             </div>
             <div id="time-7月24日" class="timeline">
-                <div class="timeline-item"><div class="timeline-card hot"><div class="time-box">09:00-12:00</div><div class="event-title">🎪 学生创意市集 · 挂牌营业及公开展示交流（高能推荐）</div></div></div>
-                <div class="timeline-item"><div class="timeline-card"><div class="time-box">14:00-17:00</div><div class="event-title">💬 青年双创主题论坛（行业大咖对谈）</div></div></div>
+                <div class="timeline-item"><div class="timeline-card hot"><div class="time-box">10:00-14:00</div><div class="event-title">🎪 学生市集 · 挂牌营业（对外开放）</div></div></div>
+                <div class="timeline-item"><div class="timeline-card"><div class="time-box" style="font-size:0.78rem;">亚运村新辰里购物中心B1层</div><div class="event-title">📍 市集地点</div></div></div>
             </div>
             <div id="time-7月25日" class="timeline">
-                <div class="timeline-item"><div class="timeline-card hot"><div class="time-box">09:00-12:00</div><div class="event-title">🔥 最终20强公开商业路演（主舞台终极角逐）</div></div></div>
-                <div class="timeline-item"><div class="timeline-card hot"><div class="time-box">18:30-21:30</div><div class="event-title">🏆 荣誉颁奖晚宴（红毯入场及三大年度奖项揭晓）</div></div></div>
+                <div class="timeline-item"><div class="timeline-card"><div class="time-box">09:30-09:40</div><div class="event-title">🎤 开场致辞</div></div></div>
+                <div class="timeline-item"><div class="timeline-card hot"><div class="time-box">09:40-12:00</div><div class="event-title">🔥 学生商业路演（对外开放）</div></div></div>
+                <div class="timeline-item"><div class="timeline-card"><div class="time-box">13:30-15:40</div><div class="event-title">🗣️ 评委面试与反馈（不对外开放）</div></div></div>
+                <div class="timeline-item"><div class="timeline-card hot"><div class="time-box">18:30-21:30</div><div class="event-title">🏆 颁奖晚宴（不对外开放）</div></div></div>
             </div>
 
-            <h2 class="section-title">参赛手册与核心规范 FAQ</h2>
+            <h2 class="section-title">参赛手册 & 常见问题</h2>
             <div class="faq-item">
-                <div class="faq-header" onclick="toggleFaq(this)">🎪 市集展销（占比 25%）核心规范 <span>▼</span></div>
+                <div class="faq-header" onclick="toggleFaq(this)">🎪 市集展销核心规范 <span class="faq-arrow">▼</span></div>
                 <div class="faq-body">
-                    <strong>【参赛细则与准则】</strong>
+                    <strong>【必读：详细规则与硬性要求】</strong>
                     <ul>
-                        <li><strong>展位空间控制</strong>：所有团队的展品、互动道具及人员站位，必须严格控制在所分配的 1.5m × 1.5m 标准展位内。超越展位边界将触发相应的扣分机制。</li>
-                        <li><strong>绿色办展与环保规范</strong>：倡导绿色生态。市集结束后，各团队需自行清理并带走所有非现场物料。若展位留有污渍或废弃物，将直接影响"社会责任"维度的评分。</li>
-                        <li><strong>用电与用电安全</strong>：各展位严禁使用大功率发热电器。所有互动电子设备的布线需使用绝缘胶带完全固定，确保通道顺畅与安全。</li>
+                        <li><strong>组委会提供</strong>：为每队分配 1 个标准展位。</li>
+                        <li><strong>库存与包装</strong>：提前备足产品库存，确保产品包装完整、安全、规范。</li>
+                        <li><strong>展位布置</strong>：必须包含公司及产品介绍、产品展示区、装饰元素、销售专区。</li>
+                        <li><strong>撤展规范</strong>：市集结束后，各团队必须负责彻底清理，带走所有自有物资及垃圾。</li>
+                        <li><strong>门头区域由JA统一布置，不建议单独装饰</strong></li>
+                        <li><strong>物料绝对自理</strong>：所有布置材料（含剪刀、胶带、绳子、夹子、展板、海报、产品等）须由团队自行准备并运送至现场。</li>
                     </ul>
                     <div class="img-placeholder" style="height:110px; margin-top:10px;">
-                        <img src="img/04_booth_size_guide.png" alt="摊位尺寸规范图">
+                        <img src="2026COY会议微站（资料汇总）/图片和附件/ncqZ6OQH.png" alt="摊位尺寸规范图">
                     </div>
                 </div>
             </div>
 
             <div class="faq-item">
-                <div class="faq-header" onclick="toggleFaq(this)">📢 舞台公开路演（占比 25%）核心规范 <span>▼</span></div>
+                <div class="faq-header" onclick="toggleFaq(this)">📢 路演展示核心规范 <span class="faq-arrow">▼</span></div>
                 <div class="faq-body">
-                    <strong>【演讲细则与准则】</strong>
+                    <strong>【必读：详细规则与硬性要求】</strong>
                     <ul>
-                        <li><strong>严格时间把控</strong>：路演展示限时 4 分钟，互动问答限时 3 分钟。超时将执行现场掐麦（强行中断发言），并按秒扣减相应的路演分数。</li>
-                        <li><strong>演示文件兼容与提交</strong>：路演所用幻灯片演示文稿（PPT / Keynote）必须在 7月22日 18:00 前完成最终版本提交。现场为保证流畅，不接受任何形式的临时文件替换。</li>
-                        <li><strong>团队协同展现</strong>：为体现团队合作，要求团队所有注册成员轮流上台进行宣讲，避免单一核心成员全场垄断发言。</li>
+                        <li><strong>人数与时间</strong>：展示顺序赛前抽签决定。每队上台不超过 <strong>4人</strong>。展示时间<strong>绝对限制在5分钟内</strong>（最后1分钟有提示，超时将被主持人强行终止）。</li>
+                        <li><strong>设备与操作</strong>：必须使用组委会提供的电脑（<strong>不接受自带电脑</strong>，提供翻页笔）。电脑操作需由团队成员自行完成。如遇参赛团队自身技术或操作引发的延迟，计入展示时间，无重复展示机会。</li>
+                        <li><strong>强制彩排测试</strong>：7月22日 14:00-17:00 组委会统一安排设备测试（每队5分钟），重点测试麦克风、站位、PPT翻页及视频播放。每家必须派 1 名代表参加。现场绝不接受更换或修改PPT。错过指定时间无法补测。</li>
                     </ul>
                 </div>
             </div>
 
             <div class="faq-item">
-                <div class="faq-header" onclick="toggleFaq(this)">👔 评委闭门面试（占比 50%）核心规范 <span>▼</span></div>
+                <div class="faq-header" onclick="toggleFaq(this)">🗣️ 评委面试核心规范 <span class="faq-arrow">▼</span></div>
                 <div class="faq-body">
-                    <strong>【答辩细则与准则】</strong>
+                    <strong>【必读：详细规则与硬性要求】</strong>
                     <ul>
-                        <li><strong>严苛的准时考勤</strong>：各战队须提前 15 分钟在候场区完成签到。迟到超过 5 分钟将被取消本模块答辩成绩（本模块占总分比重的 50%）。</li>
-                        <li><strong>全员出席硬性规则</strong>：答辩原则上要求全体团队成员共同进入面试间，接受评委的综合质询。</li>
-                        <li><strong>数据一致性核验</strong>：面试中阐述的财务与运营数据，必须与前期提交的纸质《年度清算报告书》完全一致。若出现数据逻辑冲突，将对团队诚信度与风控维度造成重大负面影响。</li>
+                        <li>每支团队接受 <strong>8分钟</strong> 单独面试，<strong>必须全员参与</strong>。</li>
+                        <li>面试分2个房间同时进行（每间10支团队），<strong>面试顺序与路演展示顺序一致</strong>。</li>
+                        <li>所有团队面试结束后，评委将为面试的10支团队提供统一反馈，带队老师可一起旁听。</li>
                     </ul>
                 </div>
             </div>
@@ -818,10 +873,37 @@ JA 中国成立于 1993 年。三十多年来，我们始终坚持"以学生为�
             <h2 class="section-title">📍 北京赛场位置指南</h2>
             <div class="spot-card">
                 <div>
-                    <strong style="color:var(--secondary-dark);">北京王府井希尔顿酒店 · 2层大宴会厅</strong>
-                    <p style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">北京市东城区王府井东街8号</p>
+                    <strong style="color:var(--secondary-dark);">北辰五洲皇冠国际酒店</strong>
+                    <p style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">商业路演：第一会议室 | 评委面试：第八、九会议室</p>
                 </div>
-                <button class="copy-btn" onclick="copyText('北京王府井希尔顿酒店')">复制地址</button>
+                <button class="copy-btn" onclick="copyText('北辰五洲皇冠国际酒店')">复制地址</button>
+            </div>
+            <div class="spot-card">
+                <div>
+                    <strong style="color:var(--secondary-dark);">亚运村新辰里购物中心 B1层</strong>
+                    <p style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">7月24日 创意市集地点（对外开放）</p>
+                </div>
+                <button class="copy-btn" onclick="copyText('亚运村新辰里购物中心')">复制地址</button>
+            </div>
+
+            <h2 class="section-title">🗺️ 北京探索指南</h2>
+            <div style="background:white; padding:16px; border-radius:var(--radius-md); box-shadow:var(--shadow-sm); margin-bottom:16px;">
+                <p style="font-weight:600; color:var(--secondary-dark); margin-bottom:10px;">🏪 后勤保障</p>
+                <ul style="padding-left:18px; font-size:0.88rem; color:var(--text-dark);">
+                    <li><strong>商场</strong>：新辰里商场，距离酒店步行3分钟</li>
+                    <li><strong>打印店</strong>：一丰24小时自助打印（步行10分钟）；水利达图文快印北辰汇园酒店公寓R座店（步行8分钟）</li>
+                </ul>
+            </div>
+            <div style="background:white; padding:16px; border-radius:var(--radius-md); box-shadow:var(--shadow-sm);">
+                <p style="font-weight:600; color:var(--secondary-dark); margin-bottom:10px;">🏙️ 城市探索推荐</p>
+                <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                    <span style="background:rgba(32,150,211,0.08); color:var(--primary); padding:6px 12px; border-radius:20px; font-size:0.82rem;">奥林匹克森林公园</span>
+                    <span style="background:rgba(32,150,211,0.08); color:var(--primary); padding:6px 12px; border-radius:20px; font-size:0.82rem;">🏟️ 鸟巢</span>
+                    <span style="background:rgba(32,150,211,0.08); color:var(--primary); padding:6px 12px; border-radius:20px; font-size:0.82rem;">🏊 水立方</span>
+                    <span style="background:rgba(32,150,211,0.08); color:var(--primary); padding:6px 12px; border-radius:20px; font-size:0.82rem;">中国共产党历史展览馆</span>
+                    <span style="background:rgba(32,150,211,0.08); color:var(--primary); padding:6px 12px; border-radius:20px; font-size:0.82rem;">🔬 国家科技馆</span>
+                    <span style="background:rgba(32,150,211,0.08); color:var(--primary); padding:6px 12px; border-radius:20px; font-size:0.82rem;">🎨 中国工艺美术馆</span>
+                </div>
             </div>
         </section>
 
@@ -829,41 +911,31 @@ JA 中国成立于 1993 年。三十多年来，我们始终坚持"以学生为�
 
         <!-- PAGE 5: 直播入口 -->
         <section id="page-live" class="page-content container">
-            <h2 class="section-title" id="section-live" style="border-color:var(--accent-red);">🔴 赛事直播</h2>
-            <div class="live-info-card">
+            <h2 class="section-title" id="section-live">📺 赛事直播</h2>
+            <div class="live-info-card animate-in">
                 <h3><span class="live-dot"></span> 2026 COY 全国大赛 · 直播入口</h3>
                 <div class="live-links">
                     <div class="live-link-item">
                         <div class="qr-placeholder">
-                            <!-- 替换为实际二维码图片 -->
-                            <span style="font-size:0.75rem; color:#999; text-align:center; line-height:1.3;">📷<br>照片直播<br>二维码</span>
+                            <img src="img/Livestream/Photo.png" alt="照片直播二维码">
                         </div>
                         <div class="live-link-text">
-                            <div class="label">📸 照片直播 · 实时精彩瞬间</div>
-                            <a href="#" target="_blank" id="photoLiveLink">点击进入照片直播 →</a>
-                            <p style="font-size:0.78rem; opacity:0.7; margin-top:4px;">扫描右侧二维码或点击链接，查看赛事现场高清即时照片</p>
+                            <div class="label">📸 照片直播 · 实时精彩瞬间（7月23日-7月25日）</div>
+                            <a href="https://live.photoplus.cn/live/pc/16282770/#/live" target="_blank" id="photoLiveLink">点击进入照片直播 →</a>
+                            <p style="font-size:0.78rem; opacity:0.7; margin-top:4px;">扫描二维码或点击链接，查看赛事现场高清即时照片</p>
                         </div>
                     </div>
                     <div class="live-link-item">
                         <div class="qr-placeholder">
-                            <!-- 替换为实际二维码图片 -->
-                            <span style="font-size:0.75rem; color:#999; text-align:center; line-height:1.3;">📺<br>视频直播<br>二维码</span>
+                            <img src="img/Livestream/video.png" alt="视频直播二维码">
                         </div>
                         <div class="live-link-text">
-                            <div class="label">🎬 视频直播 · 主舞台全程直播</div>
+                            <div class="label">🎬 视频直播 · 创业路演直播（7月24日 09:30）</div>
                             <a href="#" target="_blank" id="videoLiveLink">点击进入视频直播 →</a>
-                            <p style="font-size:0.78rem; opacity:0.7; margin-top:4px;">扫描右侧二维码或点击链接，观看路演答辩、颁奖晚宴全程直播</p>
+                            <p style="font-size:0.78rem; opacity:0.7; margin-top:4px;">扫描二维码或点击链接，观看创业实践路演直播</p>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div style="background:white; padding:20px; border-radius:var(--radius-md); box-shadow:var(--shadow-sm); text-align:center;">
-                <p style="font-size:0.95rem; color:var(--secondary-dark); font-weight:600; margin-bottom:8px;">📅 直播时间安排</p>
-                <p style="font-size:0.88rem; color:var(--text-dark);">
-                    7月23日 09:00 开幕式 & 评委面试<br>
-                    7月24日 09:00 学生创意市集<br>
-                    7月25日 09:00 商业路演 & 18:30 颁奖晚宴
-                </p>
             </div>
         </section>
 
@@ -873,25 +945,25 @@ JA 中国成立于 1993 年。三十多年来，我们始终坚持"以学生为�
         <section id="page-join" class="page-content container">
             <h2 class="section-title" id="section-join">家校社企协同 共同托举未来</h2>
             <div class="join-grid-layout">
-                <div class="join-card">
-                    <h3>🎓 JA 校友会回归</h3>
-                    <p>曾参与过 JA 课程的校友们看过来！加入 JA 庞大的校友网络，链接全球创新资源，尊享名企实习推荐及跨界交流沙龙。</p>
-                    <div class="join-action"><span class="join-badge">青春未完待续</span><a href="#" target="_blank" class="cta-btn-link"><button class="cta-btn">校友登记</button></a></div>
+                <div class="join-card animate-in">
+                    <h3>🎓 JAer学生回归</h3>
+                    <p>曾经参与JA项目的你，欢迎回到JA大家庭！连接跨界伙伴，以"企业志愿者导师"的身份重返课堂，分享真实商业经历与成长故事，让成长经验继续传递。</p>
+                    <div class="join-action"><span class="join-badge">青春未完待续</span><a href="https://jforms.jachina.org/f/o52Ukr" target="_blank" class="cta-btn-link"><button class="cta-btn">JAer登记</button></a></div>
                 </div>
-                <div class="join-card">
-                    <h3>🤝 志愿者招募计划</h3>
-                    <p>申请成为学生公司项目的企业导师、赛事评委或现场统筹志愿者，分享商业洞察，并获得 JA 官方认证的国际志愿服务证书。</p>
-                    <div class="join-action"><span class="join-badge">用商业智慧护航</span><a href="#" target="_blank" class="cta-btn-link"><button class="cta-btn">立即申请</button></a></div>
+                <div class="join-card animate-in">
+                    <h3>🤝 志愿者招募</h3>
+                    <p>成为学生公司项目企业导师、赛事评委或现场志愿者，参与课堂实践与赛事支持。分享你的专业经验，激发学生探索商业世界的热情，并获得JA官方认证的志愿服务荣誉。</p>
+                    <div class="join-action"><span class="join-badge">用专业赋能未来</span><a href="https://community.jachina.org/#home" target="_blank" class="cta-btn-link"><button class="cta-btn">立即申请</button></a></div>
                 </div>
-                <div class="join-card">
+                <div class="join-card animate-in">
                     <h3>🏢 企业合作入口</h3>
-                    <p>携手 JA 中国，支持核心课程年度赞助、赛事专项冠名或企业开放日，打造有深度的企业社会责任（CSR/ESG）公益典范。</p>
-                    <div class="join-action"><span class="join-badge">共创公益影响力</span><a href="#" target="_blank" class="cta-btn-link"><button class="cta-btn">申请合作</button></a></div>
+                    <p>携手JA中国，将企业资源与CSR实践相结合。通过项目年度赞助、员工志愿服务、企业开放日等多元合作方式，将商业智慧转化为青年成长力量，共同投资下一代的发展。</p>
+                    <div class="join-action"><span class="join-badge">共创CSR影响力</span><a href="https://jachina.feishu.cn/share/base/form/shrcnA6Piro6Wc7HLEPJ3hFGt2c?prefill_Source=wechat_JaChina_002&hide_Source=1" target="_blank" class="cta-btn-link"><button class="cta-btn">申请合作</button></a></div>
                 </div>
-                <div class="join-card">
+                <div class="join-card animate-in">
                     <h3>🏫 学校项目申请</h3>
-                    <p>期待将成熟系统、广受好评的双创商业实战、生涯规划及财务素养实践课程，引入您学校日常的综合实践课堂吗？</p>
-                    <div class="join-action"><span class="join-badge">跨学科教育实践</span><a href="#" target="_blank" class="cta-btn-link"><button class="cta-btn">提交申请</button></a></div>
+                    <p>期待将创业实践、生涯规划、金融素养与可持续发展等公益教育项目，引入综合实践课堂吗？JA中国提供系统化课程支持、企业导师进课堂以及全国赛展示交流机会，助力学生在实践中发现潜能。</p>
+                    <div class="join-action"><span class="join-badge">让教育连接真实世界</span><a href="https://jachina.feishu.cn/share/base/form/shrcnkGkx9bRWZtNzFueaPFbDVb?prefill_Source=wechat_JaChina_002&hide_Source=1" target="_blank" class="cta-btn-link"><button class="cta-btn">提交申请</button></a></div>
                 </div>
             </div>
         </section>
@@ -1015,13 +1087,13 @@ JA 中国成立于 1993 年。三十多年来，我们始终坚持"以学生为�
            轮播控制
            ======================================== */
         let currentSlide = 0;
-        const totalSlides = 3;
+        const totalSlides = 11;
         let carouselTimer = null;
 
         function carouselTo(index) {
             currentSlide = index;
             const track = document.getElementById('carouselTrack');
-            if (track) track.style.transform = `translateX(-${currentSlide * 33.333}%)`;
+            if (track) track.style.transform = `translateX(-${currentSlide * 9.0909}%)`;
             document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
                 dot.classList.toggle('active', i === currentSlide);
             });
@@ -1030,7 +1102,7 @@ JA 中国成立于 1993 年。三十多年来，我们始终坚持"以学生为�
         function carouselPrev() { carouselTo((currentSlide - 1 + totalSlides) % totalSlides); }
 
         function startCarousel() {
-            carouselTimer = setInterval(carouselNext, 4000);
+            carouselTimer = setInterval(carouselNext, 5000);
             const wrapper = document.getElementById('heroCarousel');
             if (wrapper) {
                 wrapper.addEventListener('mouseenter', () => clearInterval(carouselTimer));
@@ -1064,7 +1136,14 @@ JA 中国成立于 1993 年。三十多年来，我们始终坚持"以学生为�
 
         function toggleFaq(header) {
             const body = header.nextElementSibling;
-            body.style.display = body.style.display === 'block' ? 'none' : 'block';
+            const isOpen = body.classList.contains('open');
+            if (isOpen) {
+                body.classList.remove('open');
+                header.classList.remove('open');
+            } else {
+                body.classList.add('open');
+                header.classList.add('open');
+            }
         }
 
         function copyText(text) {
@@ -1074,11 +1153,28 @@ JA 中国成立于 1993 年。三十多年来，我们始终坚持"以学生为�
         }
 
         /* ========================================
+           滚动渐显动画（IntersectionObserver）
+           ======================================== */
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+            document.querySelectorAll('.animate-in').forEach(el => observer.observe(el));
+        }
+
+        /* ========================================
            初始化
            ======================================== */
         window.onload = () => {
             renderTeams(full20TeamsData);
             startCarousel();
+            initScrollAnimations();
         };
     </script>
 </body>
