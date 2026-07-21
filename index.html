@@ -170,24 +170,24 @@
 
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; right: 0;
-            background: linear-gradient(135deg, rgba(33,148,209,0.95) 0%, rgba(65,181,183,0.95) 50%, rgba(28,145,182,0.95) 100%);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            background: rgba(255,255,255,0.82);
+            backdrop-filter: blur(24px) saturate(1.8); -webkit-backdrop-filter: blur(24px) saturate(1.8);
             display: flex; z-index: 99;
-            border-top: 1px solid rgba(255,255,255,0.15);
-            box-shadow: 0 -4px 20px rgba(33,148,209,0.25);
+            border-top: 1px solid rgba(33,148,209,0.08);
+            box-shadow: 0 -1px 0 rgba(33,148,209,0.06);
         }
         .bottom-btn {
             flex: 1; border: none; background: none; padding: 12px 0 10px;
-            font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.7);
+            font-size: 0.75rem; font-weight: 600; color: var(--text-muted);
             cursor: pointer; text-align: center; transition: var(--transition);
             border-top: 2.5px solid transparent;
         }
         .bottom-btn.active {
-            color: #fff; font-weight: 700;
-            background: rgba(255,255,255,0.15);
-            border-top: 2.5px solid #fff;
+            color: var(--secondary-dark); font-weight: 700;
+            background: transparent;
+            border-top: 2.5px solid var(--primary);
         }
-        .bottom-btn.nav-live { color: #F4EA5C; font-weight: 700; }
+        .bottom-btn.nav-live { color: var(--primary); font-weight: 700; }
 
         .floating-container {
             position: fixed; right: 20px; bottom: 90px;
