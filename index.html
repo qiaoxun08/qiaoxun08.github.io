@@ -21,20 +21,35 @@
             --shadow-md: 0 4px 12px rgba(33,148,209,0.08), 0 12px 32px rgba(33,148,209,0.06);
             --shadow-lg: 0 8px 24px rgba(33,148,209,0.1), 0 24px 56px rgba(33,148,209,0.08);
             --shadow-glow: 0 0 60px rgba(33,148,209,0.15);
+            --shadow-gradient: 0 0 20px rgba(33,148,209,0.15), 0 0 40px rgba(65,181,183,0.08);
             --max-width: 1200px;
             --transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
             --gradient-hero: linear-gradient(135deg, #2194D1 0%, #41B5B7 18%, #85C58C 38%, #C4D56A 58%, #F4EA5C 78%, #1C91B6 100%);
             --gradient-cta: linear-gradient(135deg, #2194D1 0%, #41B5B7 100%);
             --gradient-warm: linear-gradient(135deg, #C4D56A 0%, #F4EA5C 100%);
             --gradient-cool: linear-gradient(135deg, #41B5B7 0%, #85C58C 100%);
+            --gradient-border: var(--gradient-hero);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         html { scroll-behavior: smooth; }
+
+        /* Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg-light); }
-        ::-webkit-scrollbar-thumb { background: linear-gradient(var(--c1), var(--c2)); border-radius: 3px; }
-        ::selection { background: rgba(33,148,209,0.15); color: var(--secondary-dark); }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--c1), var(--c2), var(--c3), var(--c4));
+            border-radius: 3px;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--c6), var(--c1), var(--c2), var(--c3));
+        }
+
+        ::selection {
+            background: linear-gradient(135deg, rgba(33,148,209,0.25), rgba(65,181,183,0.2), rgba(133,197,140,0.2));
+            color: var(--secondary-dark);
+        }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
@@ -48,6 +63,24 @@
             position: relative;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Body decorative background orbs */
+        body::after {
+            content: '';
+            position: fixed; inset: 0;
+            background:
+                radial-gradient(ellipse 600px 500px at 15% 20%, rgba(33,148,209,0.05) 0%, transparent 70%),
+                radial-gradient(ellipse 500px 600px at 85% 15%, rgba(65,181,183,0.04) 0%, transparent 70%),
+                radial-gradient(ellipse 700px 500px at 50% 75%, rgba(133,197,140,0.04) 0%, transparent 70%),
+                radial-gradient(ellipse 500px 400px at 80% 80%, rgba(244,234,92,0.04) 0%, transparent 70%);
+            pointer-events: none; z-index: -1;
+            animation: bodyOrbs 20s ease-in-out infinite alternate;
+        }
+        @keyframes bodyOrbs {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-15px, 10px) scale(1.02); }
+            100% { transform: translate(10px, -5px) scale(1); }
         }
 
         /* Noise texture overlay */
@@ -64,8 +97,8 @@
 
         /* Mouse-follow glow orb — desktop only */
         #glowOrb {
-            position: fixed; width: 300px; height: 300px; border-radius: 50%;
-            background: radial-gradient(circle, rgba(33,148,209,0.12) 0%, rgba(65,181,183,0.06) 40%, transparent 70%);
+            position: fixed; width: 350px; height: 350px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(33,148,209,0.14) 0%, rgba(65,181,183,0.08) 30%, rgba(133,197,140,0.04) 50%, transparent 70%);
             pointer-events: none; z-index: 0; transform: translate(-50%, -50%);
             transition: left 0.3s ease-out, top 0.3s ease-out;
             will-change: left, top;
@@ -126,7 +159,10 @@
         .pc-nav-links li a:hover { color: var(--secondary-dark); }
         .pc-nav-links li a:hover::after { transform: scaleX(1); transform-origin: left; }
         .pc-nav-links li a.active { color: var(--secondary-dark); }
-        .pc-nav-links li a.active::after { transform: scaleX(1); }
+        .pc-nav-links li a.active::after {
+            transform: scaleX(1);
+            box-shadow: 0 0 12px rgba(33,148,209,0.3), 0 0 24px rgba(65,181,183,0.15);
+        }
         .pc-nav-links li a.nav-live {
             background: var(--gradient-cta); -webkit-background-clip: text;
             -webkit-text-fill-color: transparent; font-weight: 700;
@@ -143,8 +179,16 @@
             flex: 1; border: none; background: none; padding: 12px 0;
             font-size: 0.72rem; font-weight: 600; color: var(--text-muted);
             cursor: pointer; text-align: center; transition: var(--transition);
+            border-top: 2.5px solid transparent;
         }
-        .bottom-btn.active { color: var(--primary); font-weight: 700; border-top: 2.5px solid var(--primary); }
+        .bottom-btn.active {
+            color: var(--primary); font-weight: 700;
+            border-top: 2.5px solid transparent;
+            background-image: linear-gradient(var(--primary), var(--primary));
+            background-size: 100% 2.5px;
+            background-repeat: no-repeat;
+            background-position: top;
+        }
         .bottom-btn.nav-live { color: var(--primary); }
 
         .floating-container {
@@ -167,7 +211,7 @@
         }
 
         /* ==========================================================================
-           3. HERO — Animated gradient + canvas particles
+           3. HERO — Animated gradient + canvas particles + floating orbs
            ========================================================================== */
         .img-placeholder {
             background: transparent !important; border: none !important;
@@ -198,26 +242,57 @@
             75% { background-position: 0% 100%; }
             100% { background-position: 0% 50%; }
         }
+
+        /* Hero animated color orbs */
+        .hero::before {
+            content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+        }
+        .hero::after {
+            content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+        }
+        /* Hero orb wrapper via background layered on ::before */
+        .hero::before {
+            background:
+                radial-gradient(circle 280px at 20% 80%, rgba(244,234,92,0.35) 0%, transparent 70%),
+                radial-gradient(circle 250px at 80% 20%, rgba(133,197,140,0.3) 0%, transparent 70%),
+                radial-gradient(circle 200px at 60% 60%, rgba(28,145,182,0.25) 0%, transparent 70%);
+            animation: heroOrb1 18s ease-in-out infinite alternate;
+        }
+        .hero::after {
+            background:
+                radial-gradient(circle 220px at 70% 70%, rgba(196,213,106,0.3) 0%, transparent 70%),
+                radial-gradient(circle 180px at 30% 30%, rgba(33,148,209,0.25) 0%, transparent 70%);
+            animation: heroOrb2 15s ease-in-out infinite alternate;
+        }
+        @keyframes heroOrb1 {
+            0% { transform: translate(0, 0); }
+            33% { transform: translate(30px, -20px); }
+            66% { transform: translate(-20px, 15px); }
+            100% { transform: translate(10px, -10px); }
+        }
+        @keyframes heroOrb2 {
+            0% { transform: translate(0, 0); }
+            33% { transform: translate(-25px, 15px); }
+            66% { transform: translate(15px, -25px); }
+            100% { transform: translate(-10px, 10px); }
+        }
+
         .hero #particleCanvas {
             position: absolute; inset: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: 0;
         }
         @media (max-width: 767px) {
             .hero #particleCanvas { display: none; }
-            .hero::before {
-                content: ''; position: absolute; inset: 0;
-                background:
-                    radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,0.3) 0%, transparent 100%),
-                    radial-gradient(2px 2px at 40% 70%, rgba(255,255,255,0.2) 0%, transparent 100%),
-                    radial-gradient(1px 1px at 60% 20%, rgba(255,255,255,0.25) 0%, transparent 100%),
-                    radial-gradient(2px 2px at 80% 60%, rgba(255,255,255,0.15) 0%, transparent 100%);
-                animation: pseudoFloat 8s ease-in-out infinite alternate;
-                pointer-events: none; z-index: 0;
+            .hero::before, .hero::after { display: none; }
+            .hero {
+                background: var(--gradient-hero);
+                background-size: 400% 400%;
+                animation: gradientFlow 10s ease infinite;
             }
-            @keyframes pseudoFloat {
-                from { transform: translateY(0) translateX(0); }
-                to { transform: translateY(-6px) translateX(3px); }
-            }
+            .event-title::first-letter { font-size: 0; }
+            .event-title { font-size: 0.88rem; }
+            .timeline-card { flex-direction: column; align-items: flex-start; gap: 6px; }
+            .time-box { margin-right: 0; }
         }
         .hero > * { position: relative; z-index: 1; }
         .hero .hero-logo-container { margin-bottom: 20px; }
@@ -238,26 +313,139 @@
            4. SECTION TITLES & DECORATIONS
            ========================================================================== */
         .section-title {
-            font-size: 1.35rem; color: var(--secondary-dark);
+            font-size: 1.35rem;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin: 56px 0 20px; font-weight: 800;
             letter-spacing: 0.01em; position: relative;
             padding-bottom: 14px;
         }
         .section-title::after {
             content: ''; position: absolute; bottom: 0; left: 0;
-            width: 40px; height: 3.5px; border-radius: 2px;
+            width: 48px; height: 3.5px; border-radius: 2px;
             background: var(--gradient-hero);
             animation: shimmerBar 3s ease-in-out infinite;
+            box-shadow: 0 0 8px rgba(33,148,209,0.3);
         }
         @keyframes shimmerBar {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 1; filter: brightness(1.2); }
+            0%, 100% { opacity: 0.85; }
+            50% { opacity: 1; filter: brightness(1.25); }
         }
 
         /* Floating decorative orbs — section backgrounds */
         .section-orb {
             position: absolute; border-radius: 50%; pointer-events: none;
             filter: blur(80px); opacity: 0.08; z-index: 0;
+        }
+
+        /* ==========================================================================
+           SECTION BACKGROUNDS — unique tint per page
+           ========================================================================== */
+        #page-home { position: relative; }
+        #page-home::before {
+            content: ''; position: absolute; top: -60px; left: -80px;
+            width: 400px; height: 350px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(33,148,209,0.04) 0%, transparent 70%);
+            filter: blur(60px); pointer-events: none; z-index: -1;
+        }
+        #page-home::after {
+            content: ''; position: absolute; bottom: -40px; right: -60px;
+            width: 350px; height: 300px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(65,181,183,0.04) 0%, transparent 70%);
+            filter: blur(60px); pointer-events: none; z-index: -1;
+        }
+
+        #page-about { position: relative; }
+        #page-about::before {
+            content: ''; position: absolute; top: 50px; right: -70px;
+            width: 380px; height: 320px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(65,181,183,0.04) 0%, transparent 70%);
+            filter: blur(60px); pointer-events: none; z-index: -1;
+        }
+        #page-about::after {
+            content: ''; position: absolute; bottom: 20px; left: -50px;
+            width: 300px; height: 280px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(133,197,140,0.04) 0%, transparent 70%);
+            filter: blur(60px); pointer-events: none; z-index: -1;
+        }
+
+        #page-teams { position: relative; }
+        #page-teams::before {
+            content: ''; position: absolute; top: -30px; left: 10%;
+            width: 350px; height: 300px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(133,197,140,0.05) 0%, transparent 70%);
+            filter: blur(60px); pointer-events: none; z-index: -1;
+        }
+        #page-teams::after {
+            content: ''; position: absolute; bottom: -30px; right: 5%;
+            width: 320px; height: 280px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(196,213,106,0.04) 0%, transparent 70%);
+            filter: blur(60px); pointer-events: none; z-index: -1;
+        }
+
+        #page-guide { position: relative; }
+        #page-guide::before {
+            content: ''; position: absolute; top: 40px; right: -40px;
+            width: 360px; height: 300px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(244,234,92,0.04) 0%, transparent 70%);
+            filter: blur(60px); pointer-events: none; z-index: -1;
+        }
+        #page-guide::after {
+            content: ''; position: absolute; bottom: 60px; left: -60px;
+            width: 340px; height: 280px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(28,145,182,0.04) 0%, transparent 70%);
+            filter: blur(60px); pointer-events: none; z-index: -1;
+        }
+
+        #page-live { position: relative; }
+        #page-live::before {
+            content: ''; position: absolute; top: -20px; left: 20%;
+            width: 400px; height: 300px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(33,148,209,0.05) 0%, transparent 70%);
+            filter: blur(60px); pointer-events: none; z-index: -1;
+        }
+        #page-live::after {
+            content: ''; position: absolute; bottom: -40px; right: 10%;
+            width: 300px; height: 260px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(65,181,183,0.04) 0%, transparent 70%);
+            filter: blur(60px); pointer-events: none; z-index: -1;
+        }
+
+        #page-join { position: relative; }
+        #page-join::before {
+            content: ''; position: absolute; top: 30px; right: -50px;
+            width: 380px; height: 300px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(65,181,183,0.04) 0%, transparent 70%);
+            filter: blur(60px); pointer-events: none; z-index: -1;
+        }
+        #page-join::after {
+            content: ''; position: absolute; bottom: -20px; left: 5%;
+            width: 320px; height: 260px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(133,197,140,0.04) 0%, transparent 70%);
+            filter: blur(60px); pointer-events: none; z-index: -1;
+        }
+
+        /* Hide large orbs on mobile */
+        @media (max-width: 767px) {
+            #page-home::before, #page-home::after,
+            #page-about::before, #page-about::after,
+            #page-teams::before, #page-teams::after,
+            #page-guide::before, #page-guide::after,
+            #page-live::before, #page-live::after,
+            #page-join::before, #page-join::after,
+            body::after { display: none; }
+        }
+
+        /* ==========================================================================
+           SECTION DIVIDER — thick 6-color gradient
+           ========================================================================== */
+        .section-divider {
+            border: 0; height: 2px;
+            background: linear-gradient(to right, transparent 0%, var(--c1) 10%, var(--c2) 25%, var(--c3) 42%, var(--c4) 58%, var(--c5) 75%, var(--c6) 90%, transparent 100%);
+            margin: 40px 0;
+            opacity: 0.6;
+            border-radius: 1px;
         }
 
         /* ==========================================================================
@@ -269,7 +457,14 @@
             background: white; padding: 16px;
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-sm);
-            border: 1px solid rgba(33,148,209,0.06);
+            border: 1px solid transparent;
+            background-image: linear-gradient(white, white), var(--gradient-hero);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            transition: var(--transition);
+        }
+        .video-box:hover {
+            box-shadow: var(--shadow-gradient);
         }
         .video-player {
             width: 100%; aspect-ratio: 16/9; border-radius: 12px; overflow: hidden;
@@ -305,7 +500,7 @@
             transition: var(--transition);
         }
         .carousel-dot.active {
-            background: var(--accent-light); width: 18px; border-radius: 3px;
+            background: var(--gradient-hero); width: 18px; border-radius: 3px;
             box-shadow: 0 0 8px rgba(244,234,92,0.5);
         }
         .carousel-btn {
@@ -334,12 +529,16 @@
             position: relative; overflow: hidden;
             transform-style: preserve-3d;
             will-change: transform;
+            border: 1px solid transparent;
+            background-image: linear-gradient(white, white), var(--gradient-hero);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
         }
-        /* Gradient border animation */
+        /* Gradient border — visible by default */
         .home-card::before {
             content: ''; position: absolute; inset: -2px;
             background: var(--gradient-hero); border-radius: var(--radius-lg);
-            z-index: -1; opacity: 0;
+            z-index: -1; opacity: 0.15;
             transition: opacity 0.5s ease;
         }
         .home-card:hover::before { opacity: 1; }
@@ -351,14 +550,18 @@
             pointer-events: none; z-index: 2;
         }
         .home-card:hover::after { transform: translateX(150%); }
-        .home-card:hover { box-shadow: var(--shadow-lg); }
+        .home-card:hover { box-shadow: var(--shadow-gradient); }
         .home-card-tag {
             font-size: 0.78rem; font-weight: 700;
             background: var(--gradient-cta); -webkit-background-clip: text;
             -webkit-text-fill-color: transparent; background-clip: text;
             margin-bottom: 6px;
         }
-        .home-card-title { font-size: 1.15rem; font-weight: 700; color: var(--secondary-dark); margin-bottom: 8px; }
+        .home-card-title {
+            font-size: 1.15rem; font-weight: 700; margin-bottom: 8px;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
         .home-card-body { font-size: 0.88rem; color: var(--text-dark); margin-bottom: 18px; text-align: justify; line-height: 1.7; }
 
         .cta-btn {
@@ -368,8 +571,16 @@
             cursor: pointer; text-decoration: none; text-align: center;
             transition: var(--transition); letter-spacing: 0.02em;
             box-shadow: 0 4px 14px rgba(33,148,209,0.25);
+            position: relative; overflow: hidden;
         }
-        .cta-btn:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(33,148,209,0.35); }
+        /* CTA shimmer on hover */
+        .cta-btn::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        .cta-btn:hover::after { left: 100%; }
+        .cta-btn:hover { opacity: 0.92; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(33,148,209,0.35); }
         .cta-btn:active { transform: translateY(0); }
 
         /* Live info card */
@@ -381,12 +592,17 @@
         }
         .live-info-card::before {
             content: ''; position: absolute; top: -50%; right: -20%; width: 300px; height: 300px;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 60%);
+            border-radius: 50%; animation: heroOrb1 12s ease-in-out infinite alternate;
         }
-        .live-info-card h3 { font-size: 1.1rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .live-info-card::after {
+            content: ''; position: absolute; bottom: -30%; left: -10%; width: 250px; height: 250px;
+            background: radial-gradient(circle, rgba(244,234,92,0.15) 0%, transparent 60%);
+            border-radius: 50%; animation: heroOrb2 14s ease-in-out infinite alternate;
+        }
+        .live-info-card h3 { font-size: 1.1rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; position: relative; z-index: 1; }
         .live-info-card h3 .live-dot { width: 10px; height: 10px; background: var(--accent-light); border-radius: 50%; animation: pulse 1.5s infinite; }
-        .live-links { display: flex; flex-direction: column; gap: 12px; }
+        .live-links { display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 1; }
         .live-link-item {
             display: flex; align-items: center; gap: 12px;
             background: rgba(255,255,255,0.15);
@@ -409,6 +625,10 @@
         .sub-tab-bar {
             display: flex; background: rgba(33,148,209,0.06);
             padding: 4px; border-radius: 10px; margin-bottom: 20px;
+            border: 1px solid transparent;
+            background-image: linear-gradient(rgba(33,148,209,0.06), rgba(33,148,209,0.06)), var(--gradient-hero);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
         }
         .sub-tab-btn {
             flex: 1; border: none; background: none; padding: 10px 0;
@@ -432,8 +652,11 @@
             color: var(--text-dark);
         }
         .search-input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(33,148,209,0.08);
+            border-color: transparent;
+            background-image: linear-gradient(white, white), var(--gradient-hero);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            box-shadow: 0 0 0 4px rgba(33,148,209,0.1), 0 0 20px rgba(33,148,209,0.08);
         }
         .search-input::placeholder { color: #B0B8C0; }
 
@@ -444,18 +667,26 @@
             display: flex; flex-direction: column;
             transition: var(--transition);
             position: relative;
+            border: 1px solid transparent;
+            background-image: linear-gradient(white, white), var(--gradient-hero);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
         }
         .team-card::before {
             content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-            background: var(--gradient-hero); opacity: 0;
+            background: var(--gradient-hero); opacity: 0.4;
             transition: opacity 0.4s ease;
         }
         .team-card:hover::before { opacity: 1; }
-        .team-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .team-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-gradient); }
         .team-card .img-placeholder { height: 180px; border-radius: 0; border: none !important; }
         .card-body { padding: 18px; flex-grow: 1; }
         .card-school { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 4px; font-weight: 500; }
-        .card-name { font-size: 1.1rem; font-weight: 700; color: var(--secondary-dark); margin-bottom: 6px; }
+        .card-name {
+            font-size: 1.1rem; font-weight: 700; margin-bottom: 6px;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
         .product-tag {
             display: inline-block;
             background: linear-gradient(135deg, rgba(33,148,209,0.08), rgba(65,181,183,0.08));
@@ -476,7 +707,10 @@
             border-radius: 20px; cursor: pointer; transition: var(--transition);
             white-space: nowrap; display: flex; align-items: center; gap: 4px;
         }
-        .vote-btn:hover { transform: scale(1.06); }
+        .vote-btn:hover {
+            transform: scale(1.06);
+            box-shadow: 0 0 15px rgba(244,234,92,0.4), 0 0 30px rgba(244,234,92,0.2);
+        }
         .vote-btn:active { transform: scale(0.95); }
         .vote-btn.liked { background: var(--gradient-cta); color: white; box-shadow: 0 2px 8px rgba(33,148,209,0.3); }
         .like-count { font-size: 0.75rem; color: var(--text-muted); margin-left: 4px; font-weight: 400; }
@@ -487,9 +721,12 @@
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-sm); text-align: center;
             transition: var(--transition);
-            border: 1px solid rgba(33,148,209,0.04);
+            border: 1px solid transparent;
+            background-image: linear-gradient(white, white), var(--gradient-hero);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
         }
-        .guest-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+        .guest-card:hover { box-shadow: var(--shadow-gradient); transform: translateY(-2px); }
         .guest-card .img-placeholder {
             width: 84px; height: 84px; border-radius: 50% !important;
             margin: 0 auto 12px; overflow: hidden;
@@ -498,7 +735,11 @@
             background-origin: border-box !important; background-clip: padding-box,border-box !important;
         }
         .guest-card .img-placeholder img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-        .guest-name { font-size: 0.95rem; font-weight: 700; color: var(--secondary-dark); margin-bottom: 3px; }
+        .guest-name {
+            font-size: 0.95rem; font-weight: 700; margin-bottom: 3px;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
         .guest-title { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
 
         /* ==========================================================================
@@ -522,20 +763,21 @@
         .timeline.active { display: block; }
         .timeline::before {
             content: ''; position: absolute; left: 6px; top: 5px; bottom: 5px;
-            width: 2px; background: linear-gradient(to bottom, var(--c1), var(--c2), var(--c3));
+            width: 2px;
+            background: linear-gradient(to bottom, var(--c1), var(--c2), var(--c3), var(--c4), var(--c5), var(--c6));
             border-radius: 1px;
         }
         .timeline-item { position: relative; margin-bottom: 18px; }
         .timeline-item::before {
             content: ''; position: absolute; left: -28px; top: 6px;
             width: 14px; height: 14px; border-radius: 50%;
-            background: white; border: 3px solid var(--primary);
-            z-index: 2; box-shadow: 0 0 0 4px rgba(33,148,209,0.1);
+            background: var(--gradient-hero); border: 3px solid white;
+            z-index: 2; box-shadow: 0 0 0 4px rgba(33,148,209,0.15);
             animation: nodePulse 2.5s ease-in-out infinite;
         }
         @keyframes nodePulse {
-            0%, 100% { box-shadow: 0 0 0 4px rgba(33,148,209,0.1); }
-            50% { box-shadow: 0 0 0 8px rgba(33,148,209,0.05); }
+            0%, 100% { box-shadow: 0 0 0 4px rgba(33,148,209,0.15); }
+            50% { box-shadow: 0 0 0 8px rgba(33,148,209,0.06); }
         }
         .timeline-card {
             background: white; padding: 16px;
@@ -543,24 +785,41 @@
             box-shadow: var(--shadow-sm);
             display: flex; justify-content: space-between; align-items: center;
             transition: var(--transition);
-            border: 1px solid rgba(33,148,209,0.04);
+            border: 1px solid transparent;
+            background-image: linear-gradient(white, white), var(--gradient-hero);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
         }
-        .timeline-card:hover { box-shadow: var(--shadow-md); }
+        .timeline-card:hover { box-shadow: var(--shadow-gradient); }
         .timeline-card.hot {
-            border-left: 3px solid var(--accent-light);
-            background: linear-gradient(135deg, #FFFDE8 0%, #FFF9C4 100%);
+            border-left: 3px solid transparent;
+            background-image: linear-gradient(135deg, #FFFDE8 0%, #FFF9C4 100%),
+                              linear-gradient(135deg, #FFFDE8 0%, #FFF9C4 100%),
+                              var(--gradient-hero);
+            background-origin: border-box;
+            background-clip: padding-box, padding-box, border-box;
+            border-left-width: 3px;
+            border-left-style: solid;
+            border-image: linear-gradient(to bottom, var(--c1), var(--c4), var(--c5)) 1;
         }
-        .time-box { font-weight: 700; color: var(--primary); font-size: 0.9rem; margin-right: 12px; }
+        .time-box {
+            font-weight: 700; font-size: 0.9rem; margin-right: 12px;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
         .event-title { font-weight: 600; color: var(--secondary-dark); font-size: 0.95rem; }
 
         .faq-item {
             background: white; margin-bottom: 12px;
             border-radius: var(--radius-md);
             box-shadow: var(--shadow-sm); overflow: hidden;
-            border: 1px solid rgba(33,148,209,0.04);
+            border: 1px solid transparent;
+            background-image: linear-gradient(white, white), var(--gradient-hero);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
             transition: var(--transition);
         }
-        .faq-item:hover { box-shadow: var(--shadow-md); }
+        .faq-item:hover { box-shadow: var(--shadow-gradient); }
         .faq-header {
             background: white; padding: 14px 18px;
             font-weight: 600; font-size: 0.9rem; color: var(--secondary-dark);
@@ -570,6 +829,10 @@
         .faq-header:hover { background: rgba(33,148,209,0.02); }
         .faq-header .faq-arrow { transition: transform 0.3s ease; display: inline-block; }
         .faq-header.open .faq-arrow { transform: rotate(180deg); }
+        .faq-header.open {
+            border-left: 3px solid;
+            border-image: linear-gradient(to bottom, var(--c1), var(--c2)) 1;
+        }
         .faq-body {
             max-height: 0; overflow: hidden; padding: 0 18px;
             border-top: 1px solid rgba(33,148,209,0.06);
@@ -588,10 +851,13 @@
             border-radius: var(--radius-md); margin-bottom: 10px;
             display: flex; justify-content: space-between; align-items: center;
             box-shadow: var(--shadow-sm); font-size: 0.9rem;
-            border: 1px solid rgba(33,148,209,0.06);
+            border: 1px solid transparent;
+            background-image: linear-gradient(white, white), var(--gradient-hero);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
             transition: var(--transition);
         }
-        .spot-card:hover { box-shadow: var(--shadow-md); }
+        .spot-card:hover { box-shadow: var(--shadow-gradient); }
         .copy-btn {
             background: var(--gradient-cta); color: white; border: none;
             padding: 7px 16px; font-size: 0.8rem; border-radius: 8px;
@@ -608,18 +874,25 @@
             box-shadow: var(--shadow-sm);
             position: relative; overflow: hidden;
             transition: var(--transition);
+            border: 1px solid transparent;
+            background-image:
+                linear-gradient(135deg, rgba(33,148,209,0.02), rgba(65,181,183,0.02)),
+                linear-gradient(135deg, rgba(33,148,209,0.02), rgba(65,181,183,0.02)),
+                var(--gradient-hero);
+            background-origin: border-box;
+            background-clip: padding-box, padding-box, border-box;
         }
         .data-badge::before {
             content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
             background: var(--gradient-hero);
         }
-        .data-badge:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .data-badge:hover { transform: translateY(-2px); box-shadow: var(--shadow-gradient); }
         .data-num {
             font-size: 1.3rem; font-weight: 800;
             background: var(--gradient-cta); -webkit-background-clip: text;
             -webkit-text-fill-color: transparent; background-clip: text;
         }
-        .data-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+        .data-label { font-size: 0.75rem; color: #556677; margin-top: 2px; font-weight: 500; }
 
         /* Spirit Cards - 三大精神 */
         .spirit-cards { display: flex; gap: 14px; margin-bottom: 24px; }
@@ -628,7 +901,10 @@
             background: white; padding: 20px;
             border-radius: var(--radius-md);
             box-shadow: var(--shadow-sm);
-            border: 1px solid rgba(33,148,209,0.06);
+            border: 1px solid transparent;
+            background-image: linear-gradient(white, white), var(--gradient-hero);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
             transition: var(--transition);
             position: relative; overflow: hidden;
         }
@@ -636,8 +912,13 @@
             content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
             background: var(--gradient-hero);
         }
+        .spirit-card::after {
+            content: ''; position: absolute; top: -20px; right: -20px; width: 100px; height: 100px;
+            background: radial-gradient(circle, rgba(33,148,209,0.04) 0%, transparent 70%);
+            border-radius: 50%; pointer-events: none;
+        }
         .spirit-card:hover {
-            box-shadow: var(--shadow-md);
+            box-shadow: var(--shadow-gradient);
             transform: translateX(4px);
         }
         .spirit-content h4 {
@@ -665,15 +946,22 @@
             border-left: 4px solid transparent;
             transition: var(--transition);
             position: relative; overflow: hidden;
+            background-image: linear-gradient(white, white), var(--gradient-hero);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
         }
         .join-card::before {
             content: ''; position: absolute; top: 0; left: -4px; bottom: 0; width: 4px;
             background: var(--gradient-hero);
-            opacity: 0; transition: opacity 0.4s ease;
+            opacity: 0.5; transition: opacity 0.4s ease;
         }
         .join-card:hover::before { opacity: 1; }
-        .join-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
-        .join-card h3 { font-size: 1.1rem; color: var(--secondary-dark); margin-bottom: 8px; }
+        .join-card:hover { box-shadow: var(--shadow-gradient); transform: translateY(-3px); }
+        .join-card h3 {
+            font-size: 1.1rem; margin-bottom: 8px;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
         .join-card p { font-size: 0.88rem; color: var(--text-dark); margin-bottom: 16px; text-align: justify; line-height: 1.7; }
         .join-action { display: flex; justify-content: space-between; align-items: center; }
         .join-badge { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; }
@@ -681,29 +969,37 @@
         .join-card .cta-btn { background: var(--gradient-cta); }
         .join-card .cta-btn:hover { opacity: 0.9; }
 
-        .page-content { display: block; margin-bottom: 48px; position: relative; }
-        .section-divider {
-            border: 0; height: 1px;
-            background: linear-gradient(to right, transparent, rgba(33,148,209,0.12), rgba(65,181,183,0.12), transparent);
-            margin: 40px 0;
+        /* Shimmer for team & join cards on hover */
+        .team-card::after,
+        .join-card::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0) 60%);
+            transform: translateX(-150%); transition: transform 0.7s ease;
+            pointer-events: none; z-index: 2;
         }
+        .team-card:hover::after,
+        .join-card:hover::after { transform: translateX(150%); }
+
+        .page-content { display: block; margin-bottom: 48px; position: relative; }
 
         /* ==========================================================================
            9. FOOTER — Sponsor logos
            ========================================================================== */
         .global-sponsor-footer {
-            flex-shrink: 0; background: white; padding: 32px 20px;
+            flex-shrink: 0; padding: 32px 20px;
             text-align: center;
             border-top: 1px solid rgba(33,148,209,0.06);
             margin-top: 48px; position: relative;
+            background: linear-gradient(180deg, rgba(33,148,209,0.02), rgba(65,181,183,0.02), rgba(133,197,140,0.02));
         }
         .global-sponsor-footer::before {
             content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
             background: var(--gradient-hero);
         }
         .sponsor-title {
-            font-size: 0.8rem; font-weight: 600; color: var(--text-muted);
-            margin-bottom: 18px; letter-spacing: 0.08em;
+            font-size: 0.8rem; font-weight: 600; margin-bottom: 18px; letter-spacing: 0.08em;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
         .sponsor-grid {
             display: grid; grid-template-columns: repeat(2, 1fr);
@@ -712,6 +1008,7 @@
         .sponsor-grid .logo-box {
             height: 50px; background: transparent !important;
             transition: var(--transition);
+            display: flex; align-items: center; justify-content: center;
         }
         .sponsor-grid .logo-box:hover { transform: scale(1.03); }
 
@@ -805,7 +1102,7 @@
                 <div class="logo-box">
                     <img src="img/01_pc_logo.png" alt="JA中国 LOGO">
                 </div>
-                <div class="pc-logo-text">2026 <span>COY 全国大赛</span></div>
+                <div class="pc-logo-text">2026 <span>COY</span></div>
             </div>
             <ul class="pc-nav-links">
                 <li><a id="pc-nav-home" class="active" onclick="navTo('home')">首页</a></li>
@@ -845,8 +1142,8 @@
                         <img src="img/02_hero_logo.png" alt="COY LOGO">
                     </div>
                 </div>
-                <h1>2026 JA 中国学生公司全国大赛</h1>
-                <p>青年成就中国 · 见证未来商业领袖的实践与成长</p>
+                <h1>JA 中国学生公司全国赛</h1>
+                <p>见证未来商业领袖的实践与成长</p>
             </div>
         </header>
 
@@ -854,7 +1151,7 @@
         <main id="page-home" class="page-content container">
             <div class="home-grid-layout">
                 <div>
-                    <h2 class="section-title" style="margin-top:0;">来自志愿者的加油祝福</h2>
+                    <h2 class="section-title" style="margin-top:0;">志愿者为你加油</h2>
                     <div class="video-box">
                         <div class="video-player" id="bilibiliPlayer">
                             <iframe id="bilibiliIframe" src="" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="width:100%;height:100%;display:none;"></iframe>
@@ -866,7 +1163,7 @@
                     </div>
                 </div>
                 <div>
-                    <h2 class="section-title" style="margin-top:0;">2026 COY 我们来啦！</h2>
+                    <h2 class="section-title" style="margin-top:0;">边学习边创业的一年</h2>
                     <div class="carousel-wrapper" id="heroCarousel">
                         <div class="carousel-track" id="carouselTrack">
                             <div class="carousel-slide"><img src="img/Develop/1.png" alt="COY精彩瞬间 1"></div>
@@ -991,8 +1288,8 @@ JA中国成立于1993年。三十多年来，我们始终坚持"以学生为中�
         <section id="page-teams" class="page-content container">
             <h2 class="section-title" id="section-teams">璀璨星光阵容</h2>
             <nav class="sub-tab-bar">
-                <button class="sub-tab-btn active" id="sub-btn-teams" onclick="switchStarSub('teams')">🏆 20强参赛团队</button>
-                <button class="sub-tab-btn" id="sub-btn-guests" onclick="switchStarSub('guests')">🤝 嘉宾/评委阵容</button>
+                <button class="sub-tab-btn active" id="sub-btn-teams" onclick="switchStarSub('teams')">20强参赛团队</button>
+                <button class="sub-tab-btn" id="sub-btn-guests" onclick="switchStarSub('guests')">嘉宾/评委阵容（按姓氏首字母排序）</button>
             </nav>
 
             <div id="star-teams-sec" class="star-section active">
@@ -1003,18 +1300,18 @@ JA中国成立于1993年。三十多年来，我们始终坚持"以学生为中�
             </div>
 
             <div id="star-guests-sec" class="star-section">
-                <h3 class="section-title" style="font-size:1.1rem;">🤝 嘉宾/评委阵容</h3>
+                <h3 class="section-title" style="font-size:1.1rem;">嘉宾/评委阵容</h3>
                 <div class="guest-grid">
+                    <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/蔡广明CAROL_CAIUPS.jpg" alt="蔡广明"></div><div class="guest-name">蔡广明</div><div class="guest-title">UPS 销售培训经理</div></div>
+                    <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/郝庭帅天津世纪集团有限公司.jpg" alt="郝庭帅"></div><div class="guest-name">郝庭帅</div><div class="guest-title">天津世纪集团有限公司 总经理</div></div>
+                    <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/黄皞森隆集团.jpg" alt="黄皞"></div><div class="guest-name">黄皞</div><div class="guest-title">森隆集团 总裁</div></div>
+                    <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/李佳璐北京发那科.jpg" alt="李佳璐"></div><div class="guest-name">李佳璐</div><div class="guest-title">北京发那科 品牌管理与推广部部长</div></div>
                     <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/刘佳岩星竞威武集团.jpg" alt="刘佳岩"></div><div class="guest-name">刘佳岩</div><div class="guest-title">星竞威武集团 企业社会责任总监</div></div>
                     <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/王昱东北京国际设计周有限公司.jpg" alt="王昱东"></div><div class="guest-name">王昱东</div><div class="guest-title">北京国际设计周有限公司 董事长</div></div>
-                    <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/郝庭帅天津世纪集团有限公司.jpg" alt="郝庭帅"></div><div class="guest-name">郝庭帅</div><div class="guest-title">天津世纪集团有限公司 总经理</div></div>
-                    <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/李佳璐北京发那科.jpg" alt="李佳璐"></div><div class="guest-name">李佳璐</div><div class="guest-title">北京发那科 品牌管理与推广部部长</div></div>
-                    <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/赵雪峰中共邢台市驻京流动党委.jpg" alt="赵雪峰"></div><div class="guest-name">赵雪峰</div><div class="guest-title">中共邢台市驻京流动党委副书记</div></div>
-                    <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/徐文阁河北威县驻京流动党员党委.jpg" alt="徐文阁"></div><div class="guest-name">徐文阁</div><div class="guest-title">河北威县驻京流动党员党委 书记</div></div>
-                    <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/蔡广明CAROL_CAIUPS.jpg" alt="蔡广明"></div><div class="guest-name">蔡广明</div><div class="guest-title">UPS 销售培训经理</div></div>
                     <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/王云彬JA_China.jpg" alt="王云彬"></div><div class="guest-name">王云彬</div><div class="guest-title">JA China Executive Director</div></div>
-                    <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/黄皞森隆集团.jpg" alt="黄皞"></div><div class="guest-name">黄皞</div><div class="guest-title">森隆集团 总裁</div></div>
+                    <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/徐文阁河北威县驻京流动党员党委.jpg" alt="徐文阁"></div><div class="guest-name">徐文阁</div><div class="guest-title">河北威县驻京流动党员党委 书记</div></div>
                     <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/徐雯香港德林控股集团.jpg" alt="徐雯"></div><div class="guest-name">徐雯</div><div class="guest-title">香港德林控股集团 合伙人</div></div>
+                    <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/赵雪峰中共邢台市驻京流动党委.jpg" alt="赵雪峰"></div><div class="guest-name">赵雪峰</div><div class="guest-title">中共邢台市驻京流动党委副书记</div></div>
                 </div>
             </div>
         </section>
@@ -1026,30 +1323,30 @@ JA中国成立于1993年。三十多年来，我们始终坚持"以学生为中�
             <h2 class="section-title" id="section-guide">赛事指南</h2>
             <div class="date-tabs">
                 <button class="date-btn active" id="btn-d1" onclick="switchDate('7月23日')">7月23日 周四<br>大赛启航</button>
-                <button class="date-btn" id="btn-d2" onclick="switchDate('7月24日')">7月24日 周五<br>创意市集 🔓</button>
+                <button class="date-btn" id="btn-d2" onclick="switchDate('7月24日')">7月24日 周五<br>创意市集</button>
                 <button class="date-btn" id="btn-d3" onclick="switchDate('7月25日')">7月25日 周六<br>巅峰决战</button>
             </div>
 
             <div id="time-7月23日" class="timeline active">
-                <div class="timeline-item"><div class="timeline-card"><div class="time-box">09:00-09:50</div><div class="event-title">🌅 开幕式</div></div></div>
-                <div class="timeline-item"><div class="timeline-card"><div class="time-box">09:50-11:05</div><div class="event-title">🤝 破冰活动</div></div></div>
-                <div class="timeline-item"><div class="timeline-card"><div class="time-box">11:05-11:30</div><div class="event-title">📋 师生说明会</div></div></div>
-                <div class="timeline-item"><div class="timeline-card"><div class="time-box">13:00-17:30</div><div class="event-title">🧠 Titan工作坊</div></div></div>
+                <div class="timeline-item"><div class="timeline-card"><div class="time-box">09:00-09:50</div><div class="event-title">开幕式</div></div></div>
+                <div class="timeline-item"><div class="timeline-card"><div class="time-box">09:50-11:05</div><div class="event-title">破冰活动</div></div></div>
+                <div class="timeline-item"><div class="timeline-card"><div class="time-box">11:05-11:30</div><div class="event-title">师生说明会</div></div></div>
+                <div class="timeline-item"><div class="timeline-card"><div class="time-box">13:00-17:30</div><div class="event-title">Titan工作坊</div></div></div>
             </div>
             <div id="time-7月24日" class="timeline">
-                <div class="timeline-item"><div class="timeline-card hot"><div class="time-box">10:00-14:00</div><div class="event-title">🎪 学生市集 · 挂牌营业（对外开放）</div></div></div>
-                <div class="timeline-item"><div class="timeline-card"><div class="time-box">亚运村新辰里购物中心B1层</div><div class="event-title">📍 市集地点</div></div></div>
+                <div class="timeline-item"><div class="timeline-card hot"><div class="time-box">10:00-14:00</div><div class="event-title">学生市集 · 挂牌营业（对外开放）</div></div></div>
+                <div class="timeline-item"><div class="timeline-card"><div class="time-box">亚运村新辰里购物中心B1层</div><div class="event-title">市集地点</div></div></div>
             </div>
             <div id="time-7月25日" class="timeline">
-                <div class="timeline-item"><div class="timeline-card"><div class="time-box">09:30-09:40</div><div class="event-title">🎤 开场致辞</div></div></div>
-                <div class="timeline-item"><div class="timeline-card hot"><div class="time-box">09:40-12:00</div><div class="event-title">🔥 学生商业路演（对外开放）</div></div></div>
-                <div class="timeline-item"><div class="timeline-card"><div class="time-box">13:30-15:40</div><div class="event-title">🗣️ 评委面试与反馈（不对外开放）</div></div></div>
-                <div class="timeline-item"><div class="timeline-card hot"><div class="time-box">18:30-21:30</div><div class="event-title">🏆 颁奖晚宴（不对外开放）</div></div></div>
+                <div class="timeline-item"><div class="timeline-card"><div class="time-box">09:30-09:40</div><div class="event-title">开场致辞</div></div></div>
+                <div class="timeline-item"><div class="timeline-card hot"><div class="time-box">09:40-12:00</div><div class="event-title">学生商业路演（对外开放）</div></div></div>
+                <div class="timeline-item"><div class="timeline-card"><div class="time-box">13:30-15:40</div><div class="event-title">评委面试与反馈（不对外开放）</div></div></div>
+                <div class="timeline-item"><div class="timeline-card hot"><div class="time-box">18:30-21:30</div><div class="event-title">颁奖晚宴（不对外开放）</div></div></div>
             </div>
 
             <h2 class="section-title">参赛手册 & 常见问题</h2>
             <div class="faq-item">
-                <div class="faq-header" onclick="toggleFaq(this)">🎪 市集展销核心规范 <span class="faq-arrow">▼</span></div>
+                <div class="faq-header" onclick="toggleFaq(this)">市集展销核心规范 <span class="faq-arrow">▼</span></div>
                 <div class="faq-body">
                     <strong>【必读：详细规则与硬性要求】</strong>
                     <ul>
@@ -1067,7 +1364,7 @@ JA中国成立于1993年。三十多年来，我们始终坚持"以学生为中�
             </div>
 
             <div class="faq-item">
-                <div class="faq-header" onclick="toggleFaq(this)">📢 路演展示核心规范 <span class="faq-arrow">▼</span></div>
+                <div class="faq-header" onclick="toggleFaq(this)">路演展示核心规范 <span class="faq-arrow">▼</span></div>
                 <div class="faq-body">
                     <strong>【必读：详细规则与硬性要求】</strong>
                     <ul>
@@ -1079,7 +1376,7 @@ JA中国成立于1993年。三十多年来，我们始终坚持"以学生为中�
             </div>
 
             <div class="faq-item">
-                <div class="faq-header" onclick="toggleFaq(this)">🗣️ 评委面试核心规范 <span class="faq-arrow">▼</span></div>
+                <div class="faq-header" onclick="toggleFaq(this)">评委面试核心规范 <span class="faq-arrow">▼</span></div>
                 <div class="faq-body">
                     <strong>【必读：详细规则与硬性要求】</strong>
                     <ul>
@@ -1090,11 +1387,11 @@ JA中国成立于1993年。三十多年来，我们始终坚持"以学生为中�
                 </div>
             </div>
 
-            <h2 class="section-title">📍 北京赛场位置指南</h2>
+            <h2 class="section-title">北京赛场位置指南</h2>
             <div class="spot-card">
                 <div>
                     <strong style="color:var(--secondary-dark);">北辰五洲皇冠国际酒店</strong>
-                    <p style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">商业路演：第一会议室 | 评委面试：第八、九会议室</p>
+                    <p style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">商业路演：第一会议室<br>评委面试：第八、九会议室</p>
                 </div>
                 <button class="copy-btn" onclick="copyText('北辰五洲皇冠国际酒店')">复制地址</button>
             </div>
@@ -1106,23 +1403,23 @@ JA中国成立于1993年。三十多年来，我们始终坚持"以学生为中�
                 <button class="copy-btn" onclick="copyText('亚运村新辰里购物中心')">复制地址</button>
             </div>
 
-            <h2 class="section-title">🗺️ 北京探索指南</h2>
+            <h2 class="section-title">北京探索指南</h2>
             <div style="background:white; padding:20px; border-radius:var(--radius-md); box-shadow:var(--shadow-sm); margin-bottom:16px; border: 1px solid rgba(33,148,209,0.04);">
-                <p style="font-weight:600; color:var(--secondary-dark); margin-bottom:10px;">🏪 后勤保障</p>
+                <p style="font-weight:600; color:var(--secondary-dark); margin-bottom:10px;">后勤保障</p>
                 <ul style="padding-left:18px; font-size:0.88rem; color:var(--text-dark);">
                     <li><strong>商场</strong>：新辰里商场，距离酒店步行3分钟</li>
                     <li><strong>打印店</strong>：一丰24小时自助打印（步行10分钟）；水利达图文快印北辰汇园酒店公寓R座店（步行8分钟）</li>
                 </ul>
             </div>
             <div style="background:white; padding:20px; border-radius:var(--radius-md); box-shadow:var(--shadow-sm); border: 1px solid rgba(33,148,209,0.04);">
-                <p style="font-weight:600; color:var(--secondary-dark); margin-bottom:10px;">🏙️ 城市探索推荐</p>
+                <p style="font-weight:600; color:var(--secondary-dark); margin-bottom:10px;">城市探索推荐</p>
                 <div style="display:flex; flex-wrap:wrap; gap:8px;">
                     <span style="background:linear-gradient(135deg, rgba(33,148,209,0.08), rgba(65,181,183,0.08)); color:var(--primary); padding:6px 14px; border-radius:20px; font-size:0.82rem; font-weight:500;">奥林匹克森林公园</span>
-                    <span style="background:linear-gradient(135deg, rgba(33,148,209,0.08), rgba(65,181,183,0.08)); color:var(--primary); padding:6px 14px; border-radius:20px; font-size:0.82rem; font-weight:500;">🏟️ 鸟巢</span>
-                    <span style="background:linear-gradient(135deg, rgba(33,148,209,0.08), rgba(65,181,183,0.08)); color:var(--primary); padding:6px 14px; border-radius:20px; font-size:0.82rem; font-weight:500;">🏊 水立方</span>
+                    <span style="background:linear-gradient(135deg, rgba(33,148,209,0.08), rgba(65,181,183,0.08)); color:var(--primary); padding:6px 14px; border-radius:20px; font-size:0.82rem; font-weight:500;">鸟巢</span>
+                    <span style="background:linear-gradient(135deg, rgba(33,148,209,0.08), rgba(65,181,183,0.08)); color:var(--primary); padding:6px 14px; border-radius:20px; font-size:0.82rem; font-weight:500;">水立方</span>
                     <span style="background:linear-gradient(135deg, rgba(33,148,209,0.08), rgba(65,181,183,0.08)); color:var(--primary); padding:6px 14px; border-radius:20px; font-size:0.82rem; font-weight:500;">中国共产党历史展览馆</span>
-                    <span style="background:linear-gradient(135deg, rgba(33,148,209,0.08), rgba(65,181,183,0.08)); color:var(--primary); padding:6px 14px; border-radius:20px; font-size:0.82rem; font-weight:500;">🔬 国家科技馆</span>
-                    <span style="background:linear-gradient(135deg, rgba(33,148,209,0.08), rgba(65,181,183,0.08)); color:var(--primary); padding:6px 14px; border-radius:20px; font-size:0.82rem; font-weight:500;">🎨 中国工艺美术馆</span>
+                    <span style="background:linear-gradient(135deg, rgba(33,148,209,0.08), rgba(65,181,183,0.08)); color:var(--primary); padding:6px 14px; border-radius:20px; font-size:0.82rem; font-weight:500;">国家科技馆</span>
+                    <span style="background:linear-gradient(135deg, rgba(33,148,209,0.08), rgba(65,181,183,0.08)); color:var(--primary); padding:6px 14px; border-radius:20px; font-size:0.82rem; font-weight:500;">中国工艺美术馆</span>
                 </div>
             </div>
         </section>
@@ -1140,9 +1437,7 @@ JA中国成立于1993年。三十多年来，我们始终坚持"以学生为中�
                             <img src="img/Livestream/Photo.png" alt="照片直播二维码">
                         </div>
                         <div class="live-link-text">
-                            <div class="label">📸 照片直播 · 实时精彩瞬间（7月23日-7月25日）</div>
                             <a href="https://live.photoplus.cn/live/pc/16282770/#/live" target="_blank" id="photoLiveLink">点击进入照片直播 →</a>
-                            <p style="font-size:0.78rem; opacity:0.7; margin-top:4px;">扫描二维码或点击链接，查看赛事现场高清即时照片</p>
                         </div>
                     </div>
                     <div class="live-link-item">
@@ -1150,9 +1445,7 @@ JA中国成立于1993年。三十多年来，我们始终坚持"以学生为中�
                             <img src="img/Livestream/video.png" alt="视频直播二维码">
                         </div>
                         <div class="live-link-text">
-                            <div class="label">🎬 视频直播 · 创业路演直播（7月24日 09:30）</div>
-                            <a href="#" target="_blank" id="videoLiveLink">点击进入视频直播 →</a>
-                            <p style="font-size:0.78rem; opacity:0.7; margin-top:4px;">扫描二维码或点击链接，观看创业实践路演直播</p>
+                            <a href="#" target="_blank" id="videoLiveLink">点击进入视频直播 （直播当时开放）→</a>
                         </div>
                     </div>
                 </div>
@@ -1171,7 +1464,7 @@ JA中国成立于1993年。三十多年来，我们始终坚持"以学生为中�
                     <div class="join-action"><span class="join-badge">青春未完待续</span><a href="https://jforms.jachina.org/f/o52Ukr" target="_blank" class="cta-btn-link"><button class="cta-btn">JAer登记</button></a></div>
                 </div>
                 <div class="join-card animate-in">
-                    <h3>🤝 志愿者招募</h3>
+                    <h3>志愿者招募</h3>
                     <p>成为学生公司项目企业导师、赛事评委或现场志愿者，参与课堂实践与赛事支持。分享你的专业经验，激发学生探索商业世界的热情，并获得JA官方认证的志愿服务荣誉。</p>
                     <div class="join-action"><span class="join-badge">用专业赋能未来</span><a href="https://community.jachina.org/#home" target="_blank" class="cta-btn-link"><button class="cta-btn">立即申请</button></a></div>
                 </div>
