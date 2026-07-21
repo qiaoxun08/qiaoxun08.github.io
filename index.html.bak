@@ -303,15 +303,7 @@
             background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.85) 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             background-clip: text; letter-spacing: 0.03em;
-            text-shadow: 0 0 30px rgba(255,255,255,0.6), 0 0 60px rgba(33,148,209,0.4), 0 0 90px rgba(65,181,183,0.2);
-            animation: heroGlitch 5s infinite;
-        }
-        @keyframes heroGlitch {
-            0%, 88%, 100% { transform: translate(0); filter: none; }
-            90% { transform: translate(-3px, 1px); filter: hue-rotate(30deg) brightness(1.3); }
-            92% { transform: translate(3px, -2px); filter: hue-rotate(-30deg) brightness(0.9); }
-            94% { transform: translate(-1px, -1px); filter: hue-rotate(15deg) brightness(1.1); }
-            96% { transform: translate(2px, 1px); filter: none; }
+            text-shadow: 0 2px 30px rgba(0,0,0,0.1);
         }
         .hero p { font-size: 0.92rem; color: rgba(255,255,255,0.9); letter-spacing: 0.08em; font-weight: 400; }
 
@@ -474,10 +466,10 @@
         }
         .video-player {
             width: 100%; aspect-ratio: 16/9; border-radius: 12px; overflow: hidden;
-            position: relative; background: linear-gradient(135deg, #173B48, #2194D1);
+            position: relative; background: #1a1a2e;
         }
         .video-player video { width: 100%; display: block; border-radius: 12px; }
-        .video-poster{position:absolute;inset:0;background:linear-gradient(135deg, #173B48 0%, #2194D1 30%, #41B5B7 60%, #85C58C 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;z-index:2;transition:opacity .3s;border-radius:12px}
+        .video-poster{position:absolute;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;z-index:2;transition:opacity .3s;border-radius:12px}
         .video-poster:hover{opacity:.9}
         .video-play-btn{width:64px;height:64px;background:rgba(255,255,255,.15);backdrop-filter:blur(8px);border:2px solid rgba(255,255,255,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:#fff;transition:transform .3s,background .3s}
         .video-poster:hover .video-play-btn{transform:scale(1.1);background:rgba(32,150,211,.4);border-color:rgba(32,150,211,.6)}
@@ -841,7 +833,7 @@
         }
         .faq-body {
             max-height: 0; overflow: hidden; padding: 0 18px;
-            border-top: 2.5px solid; border-image: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c5), var(--c6), var(--c1)) 1;
+            border-top: 1px solid rgba(33,148,209,0.06);
             font-size: 0.88rem; color: var(--text-dark);
             background: rgba(33,148,209,0.01);
             text-align: justify;
@@ -994,7 +986,7 @@
         .global-sponsor-footer {
             flex-shrink: 0; padding: 32px 20px;
             text-align: center;
-            border-top: 2.5px solid; border-image: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c5), var(--c6), var(--c1)) 1;
+            border-top: 1px solid rgba(33,148,209,0.06);
             margin-top: 48px; position: relative;
             background: linear-gradient(180deg, rgba(33,148,209,0.02), rgba(65,181,183,0.02), rgba(133,197,140,0.02));
         }
@@ -1093,195 +1085,6 @@
             .join-grid-layout { grid-template-columns: repeat(2, 1fr); gap: 16px; }
             .sponsor-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; }
         }
-
-        /* ======== SCI-FI PREMIUM EFFECTS ======== */
-
-        /* Animated color-cycling border keyframes */
-        @keyframes borderGlow {
-            0% { border-color: rgba(33,148,209,0.25); }
-            16% { border-color: rgba(65,181,183,0.25); }
-            33% { border-color: rgba(133,197,140,0.25); }
-            50% { border-color: rgba(196,213,106,0.25); }
-            66% { border-color: rgba(244,234,92,0.25); }
-            83% { border-color: rgba(28,145,182,0.25); }
-            100% { border-color: rgba(33,148,209,0.25); }
-        }
-        @keyframes borderGlowHover {
-            0% { border-color: rgba(33,148,209,0.6); box-shadow: 0 0 20px rgba(33,148,209,0.2), 0 0 40px rgba(33,148,209,0.05); }
-            16% { border-color: rgba(65,181,183,0.6); box-shadow: 0 0 20px rgba(65,181,183,0.2), 0 0 40px rgba(65,181,183,0.05); }
-            33% { border-color: rgba(133,197,140,0.6); box-shadow: 0 0 20px rgba(133,197,140,0.2), 0 0 40px rgba(133,197,140,0.05); }
-            50% { border-color: rgba(196,213,106,0.6); box-shadow: 0 0 20px rgba(196,213,106,0.2), 0 0 40px rgba(196,213,106,0.05); }
-            66% { border-color: rgba(244,234,92,0.6); box-shadow: 0 0 20px rgba(244,234,92,0.2), 0 0 40px rgba(244,234,92,0.05); }
-            83% { border-color: rgba(28,145,182,0.6); box-shadow: 0 0 20px rgba(28,145,182,0.2), 0 0 40px rgba(28,145,182,0.05); }
-            100% { border-color: rgba(33,148,209,0.6); box-shadow: 0 0 20px rgba(33,148,209,0.2), 0 0 40px rgba(33,148,209,0.05); }
-        }
-
-        /* Holographic shimmer sweep on cards */
-        .home-card::after,
-        .team-card::after,
-        .join-card::after {
-            content: '' !important; position: absolute !important; inset: 0 !important;
-            background: linear-gradient(105deg,
-                transparent 30%,
-                rgba(33,148,209,0.06) 38%,
-                rgba(65,181,183,0.1) 42%,
-                rgba(133,197,140,0.1) 46%,
-                rgba(196,213,106,0.1) 50%,
-                rgba(244,234,92,0.06) 54%,
-                transparent 62%) !important;
-            background-size: 200% 100% !important;
-            transform: translateX(-150%) !important;
-            transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
-            pointer-events: none !important; z-index: 2 !important;
-            border-radius: inherit !important;
-        }
-        .home-card:hover::after,
-        .team-card:hover::after,
-        .join-card:hover::after {
-            transform: translateX(150%) !important;
-        }
-
-        /* HUD corner brackets */
-        .home-card::before,
-        .team-card::before {
-            content: '' !important;
-            position: absolute !important;
-            top: 8px !important; left: 8px !important;
-            width: 20px !important; height: 20px !important;
-            border-top: 2px solid var(--c1) !important;
-            border-left: 2px solid var(--c1) !important;
-            border-bottom: none !important; border-right: none !important;
-            pointer-events: none !important; z-index: 3 !important;
-            opacity: 0 !important;
-            transition: opacity 0.4s ease !important;
-            background: none !important;
-            border-radius: 0 !important;
-            filter: none !important;
-            box-shadow: none !important;
-            inset: auto !important;
-            border-image: none !important;
-        }
-        .home-card:hover::before,
-        .team-card:hover::before {
-            opacity: 0.7 !important;
-        }
-
-        /* Animated neon border on all cards */
-        .home-card, .team-card, .join-card, .guest-card,
-        .faq-item, .spot-card, .spirit-card {
-            border: 1.5px solid rgba(33,148,209,0.15);
-            animation: borderGlow 8s linear infinite;
-        }
-        .home-card:hover, .team-card:hover, .join-card:hover,
-        .guest-card:hover, .faq-item:hover, .spot-card:hover {
-            animation: borderGlowHover 3s linear infinite;
-        }
-
-        /* Section title neon underline glow */
-        .section-title::after {
-            box-shadow: 0 0 12px rgba(33,148,209,0.4), 0 0 24px rgba(65,181,183,0.2) !important;
-        }
-
-        /* Timeline node enhanced neon */
-        .timeline-item::before {
-            box-shadow: 0 0 0 4px rgba(33,148,209,0.15), 0 0 12px rgba(33,148,209,0.25), 0 0 24px rgba(65,181,183,0.1) !important;
-        }
-
-        /* CTA button neon glow */
-        .cta-btn:hover {
-            box-shadow: 0 0 15px rgba(33,148,209,0.4), 0 0 30px rgba(65,181,183,0.2), 0 0 45px rgba(133,197,140,0.1) !important;
-        }
-
-        /* Vote button neon */
-        .vote-btn:hover {
-            box-shadow: 0 0 15px rgba(244,234,92,0.5), 0 0 30px rgba(244,234,92,0.25) !important;
-        }
-
-        /* Date button active glow */
-        .date-btn.active {
-            box-shadow: 0 0 15px rgba(33,148,209,0.3), 0 0 30px rgba(65,181,183,0.15) !important;
-        }
-
-        /* Section divider glow */
-        .section-divider {
-            box-shadow: 0 0 8px rgba(33,148,209,0.2), 0 0 16px rgba(65,181,183,0.1);
-        }
-
-        /* Guest avatar ring glow */
-        .guest-card .img-placeholder {
-            box-shadow: 0 0 12px rgba(33,148,209,0.25), 0 0 24px rgba(65,181,183,0.12) !important;
-        }
-        .guest-card:hover .img-placeholder {
-            box-shadow: 0 0 18px rgba(33,148,209,0.4), 0 0 36px rgba(65,181,183,0.2) !important;
-        }
-
-        /* Live card glow */
-        .live-info-card {
-            box-shadow: 0 0 30px rgba(33,148,209,0.2), 0 0 60px rgba(65,181,183,0.1) !important;
-        }
-
-        /* PC nav neon underline */
-        .pc-nav-links li a.active::after {
-            box-shadow: 0 0 10px rgba(33,148,209,0.4), 0 0 20px rgba(65,181,183,0.2);
-        }
-        .pc-nav-links li a:hover::after {
-            box-shadow: 0 0 8px rgba(33,148,209,0.3), 0 0 16px rgba(65,181,183,0.15);
-        }
-
-        /* Bottom btn active glow */
-        .bottom-btn.active {
-            text-shadow: 0 0 8px rgba(33,148,209,0.4);
-        }
-
-        /* Float button glow */
-        .float-btn.live {
-            box-shadow: 0 0 15px rgba(33,148,209,0.3), 0 0 30px rgba(33,148,209,0.15);
-        }
-        .float-btn.photo {
-            box-shadow: 0 0 12px rgba(65,181,183,0.25), 0 0 24px rgba(133,197,140,0.1);
-        }
-
-        /* Sponsor footer glow line */
-        .global-sponsor-footer::before {
-            box-shadow: 0 0 10px rgba(33,148,209,0.3), 0 0 20px rgba(65,181,183,0.15);
-        }
-
-        /* Search focus glow */
-        .search-input:focus {
-            box-shadow: 0 0 0 4px rgba(33,148,209,0.1), 0 0 20px rgba(33,148,209,0.15), 0 0 40px rgba(65,181,183,0.08) !important;
-        }
-
-        /* Copy button glow */
-        .copy-btn:hover {
-            box-shadow: 0 0 12px rgba(33,148,209,0.3), 0 0 24px rgba(65,181,183,0.15);
-        }
-
-        /* Hero orbs enhanced */
-        .hero::before {
-            background:
-                radial-gradient(circle 300px at 20% 80%, rgba(244,234,92,0.4) 0%, transparent 70%),
-                radial-gradient(circle 280px at 80% 20%, rgba(133,197,140,0.35) 0%, transparent 70%),
-                radial-gradient(circle 220px at 60% 60%, rgba(28,145,182,0.3) 0%, transparent 70%);
-        }
-        .hero::after {
-            background:
-                radial-gradient(circle 250px at 70% 70%, rgba(196,213,106,0.35) 0%, transparent 70%),
-                radial-gradient(circle 200px at 30% 30%, rgba(33,148,209,0.3) 0%, transparent 70%);
-        }
-
-        /* Body orbs enhanced */
-        body::after {
-            background:
-                radial-gradient(ellipse 600px 500px at 15% 20%, rgba(33,148,209,0.07) 0%, transparent 70%),
-                radial-gradient(ellipse 500px 600px at 85% 15%, rgba(65,181,183,0.06) 0%, transparent 70%),
-                radial-gradient(ellipse 700px 500px at 50% 75%, rgba(133,197,140,0.05) 0%, transparent 70%),
-                radial-gradient(ellipse 500px 400px at 80% 80%, rgba(244,234,92,0.05) 0%, transparent 70%);
-        }
-
-        @media (max-width: 767px) {
-            .home-card::before, .team-card::before { display: none !important; }
-        }
-
     </style>
 </head>
 <body>
@@ -1491,7 +1294,7 @@ JA中国成立于1993年。三十多年来，我们始终坚持"以学生为中�
             <h2 class="section-title" id="section-teams">璀璨星光阵容</h2>
             <nav class="sub-tab-bar">
                 <button class="sub-tab-btn active" id="sub-btn-teams" onclick="switchStarSub('teams')">20强参赛团队</button>
-                <button class="sub-tab-btn" id="sub-btn-guests" onclick="switchStarSub('guests')">嘉宾/评委阵容</button>
+                <button class="sub-tab-btn" id="sub-btn-guests" onclick="switchStarSub('guests')">嘉宾/评委阵容（按姓氏首字母排序）</button>
             </nav>
 
             <div id="star-teams-sec" class="star-section active">
@@ -1502,19 +1305,18 @@ JA中国成立于1993年。三十多年来，我们始终坚持"以学生为中�
             </div>
 
             <div id="star-guests-sec" class="star-section">
-                <h3 class="section-title" style="font-size:1.1rem;">嘉宾/评委阵容（按姓氏首字母排序）</h3>
+                <h3 class="section-title" style="font-size:1.1rem;">嘉宾/评委阵容</h3>
                 <div class="guest-grid">
                     <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/蔡广明CAROL_CAIUPS.jpg" alt="蔡广明"></div><div class="guest-name">蔡广明</div><div class="guest-title">UPS 销售培训经理</div></div>
                     <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/郝庭帅天津世纪集团有限公司.jpg" alt="郝庭帅"></div><div class="guest-name">郝庭帅</div><div class="guest-title">天津世纪集团有限公司 总经理</div></div>
                     <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/黄皞森隆集团.jpg" alt="黄皞"></div><div class="guest-name">黄皞</div><div class="guest-title">森隆集团 总裁</div></div>
                     <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/李佳璐北京发那科.jpg" alt="李佳璐"></div><div class="guest-name">李佳璐</div><div class="guest-title">北京发那科 品牌管理与推广部部长</div></div>
                     <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/刘佳岩星竞威武集团.jpg" alt="刘佳岩"></div><div class="guest-name">刘佳岩</div><div class="guest-title">星竞威武集团 企业社会责任总监</div></div>
-                    <div class="guest-card"><div class="img-placeholder"></div><div class="guest-name">宿菲</div><div class="guest-title">平行国 创始人</div></div>
-                    <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/王培培 北京接力公益基金会 秘书长.jpg" alt="王培培"></div><div class="guest-name">王培培</div><div class="guest-title">北京接力公益基金会 秘书长</div></div>
                     <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/王昱东北京国际设计周有限公司.jpg" alt="王昱东"></div><div class="guest-name">王昱东</div><div class="guest-title">北京国际设计周有限公司 董事长</div></div>
-                    <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/王云彬JA_China.jpg" alt="王云彬"></div><div class="guest-name">王云彬</div><div class="guest-title">青年成就中国 执行总裁</div></div>
+                    <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/王云彬JA_China.jpg" alt="王云彬"></div><div class="guest-name">王云彬</div><div class="guest-title">JA China Executive Director</div></div>
                     <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/徐文阁河北威县驻京流动党员党委.jpg" alt="徐文阁"></div><div class="guest-name">徐文阁</div><div class="guest-title">河北威县驻京流动党员党委 书记</div></div>
                     <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/徐雯香港德林控股集团.jpg" alt="徐雯"></div><div class="guest-name">徐雯</div><div class="guest-title">香港德林控股集团 合伙人</div></div>
+                    <div class="guest-card"><div class="img-placeholder"><img src="img/Judge/赵雪峰中共邢台市驻京流动党委.jpg" alt="赵雪峰"></div><div class="guest-name">赵雪峰</div><div class="guest-title">中共邢台市驻京流动党委副书记</div></div>
                 </div>
             </div>
         </section>
@@ -1560,9 +1362,6 @@ JA中国成立于1993年。三十多年来，我们始终坚持"以学生为中�
                         <li><strong>门头区域由JA统一布置，不建议单独装饰</strong></li>
                         <li><strong>物料绝对自理</strong>：所有布置材料（含剪刀、胶带、绳子、夹子、展板、海报、产品等）须由团队自行准备并运送至现场。</li>
                     </ul>
-                    <div class="img-placeholder" style="height:110px; margin-top:10px;">
-                        <img src="2026COY会议微站（资料汇总）/图片和附件/ncqZ6OQH.png" alt="摊位尺寸规范图">
-                    </div>
                 </div>
             </div>
 
@@ -1898,7 +1697,7 @@ JA中国成立于1993年。三十多年来，我们始终坚持"以学生为中�
             resize();
             window.addEventListener('resize', resize);
 
-            const colors = ['rgba(33,148,209,0.5)', 'rgba(65,181,183,0.4)', 'rgba(133,197,140,0.35)', 'rgba(196,213,106,0.3)', 'rgba(244,234,92,0.35)', 'rgba(28,145,182,0.4)'];
+            const colors = ['rgba(255,255,255,0.25)', 'rgba(255,255,255,0.15)', 'rgba(244,234,92,0.2)', 'rgba(133,197,140,0.2)'];
 
             for (let i = 0; i < 50; i++) {
                 particles.push({
@@ -1929,7 +1728,7 @@ JA中国成立于1993年。三十多年来，我们始终坚持"以学生为中�
 
                 // Draw connections
                 ctx.globalAlpha = 0.06;
-                ctx.strokeStyle = 'rgba(33,148,209,0.35)';
+                ctx.strokeStyle = 'rgba(255,255,255,0.3)';
                 ctx.lineWidth = 0.5;
                 for (let i = 0; i < particles.length; i++) {
                     for (let j = i + 1; j < particles.length; j++) {
